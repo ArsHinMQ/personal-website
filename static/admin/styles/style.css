@@ -1,0 +1,327 @@
+@import url('../../base_style.css');
+body {
+    color: black;
+    font-family: "Comic-Sans-MS";
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0 !important;
+}
+
+header, main {
+    float: right;
+    width: 85%;
+}
+
+header {
+    background-color: white;
+    height: 10vh;
+    border-bottom: 1px solid #ddd;
+}
+
+aside {
+    float: left;
+    width: 15%;
+    height: 100vh;
+    background-color: #333;
+}
+
+main {
+    height: 89vh;
+    background-color: #eee;
+}
+
+.title, .resume, .profile-panel, .contact {
+    border-bottom: 1px solid #555;
+}
+
+nav ul li {
+    padding: 17px 8px 17px 8px;
+    display: inline-block;
+}
+
+.left-nav-ele {
+    float: left;
+}
+
+nav ul li a, nav ul li {
+    color: #777;
+}
+
+.right-nav-ele {
+    float: right;
+}
+
+nav ul li a {
+    text-decoration: none;
+}
+
+.title {
+    color: white;
+    text-align: center;
+    padding: 7px 0;
+}
+
+.container {
+    height: 85%;
+}
+
+.container li h4 {
+    color: #333;
+    padding: 4px 0;
+    text-align: center;
+}
+
+.sub a {
+    display: block;
+    border-top: 1px solid #555;
+    text-decoration: none;
+    color: #eee;
+    padding: 8px 4px;
+}
+
+.sub a:hover {
+    font-weight: bold;
+}
+
+.display-inline-block {
+    display: inline-block;
+    vertical-align: top;
+}
+
+div.thumbnail>img, .custom-file-upload {
+    margin: 20px;
+    margin-bottom: 0;
+    display: block;
+}
+
+.container {
+    background: no-repeat center center fixed;
+    background-size: cover;
+    height: 100%;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    text-align: center;
+    color: #333;
+    padding: 0;
+    height: 2.5rem;
+    background-color: #ddd;
+    border-radius: 5px;
+}
+
+.custom-file-upload:hover {
+    cursor: pointer;
+}
+
+label {
+    font-size: large;
+    display: block;
+    color: #ddd;
+}
+
+#first-label {
+    display: inline-block;
+    margin-top: 20px;
+}
+
+textarea {
+    vertical-align: top;
+}
+
+input, textarea {
+    color: #333;
+    padding: 10px;
+    background-color: white;
+    border: 1px solid #333;
+    border-radius: 5px;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border: 2px solid #17a2b8;
+}
+
+.profile {
+    width: 100%;
+    display: block;
+    margin: 10px 20px 30px 0;
+    font-size: large;
+}
+
+input[type='text'].normal, input[type="number"].normal {
+    height: 2rem;
+    width: 90%;
+    padding: 30px 10px;
+}
+
+input[type="submit"], button.cancel {
+    color: #eee;
+    display: block;
+    width: 100%;
+    margin: auto;
+    margin-top: 20px;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 5px;
+    font-size: large;
+}
+
+input[type='range'] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 20px;
+    background-color: #d3d3d3;
+    outline: none;
+    border-radius: 20px;
+}
+
+input[type='range']:hover {
+    cursor: pointer;
+}
+
+.in-table-input {
+    height: initial;
+    width: 100%;
+}
+
+input[type='number'].in-table-input {
+    width: 70px;
+}
+
+input[type="submit"]:hover, button.cancel:hover {
+    cursor: pointer;
+}
+
+.btn {
+    text-decoration: none;
+    border-radius: 5px;
+    height: 100%;
+    width: 100px;
+    float: right;
+}
+
+.card {
+    margin: 20px auto;
+    width: 90%;
+}
+
+.card .display-inline-block {
+    width: 45%;
+    margin: 0 20px;
+}
+
+.card-body, .card-header {
+    padding: 20px;
+}
+
+.card-body form div label {
+    color: #333;
+    font-size: 1.3rem;
+}
+
+.card-header {
+    color: white;
+    font-weight: bolder;
+    border-radius: 15px 15px 0 0;
+}
+
+.card-body {
+    background-color: white;
+    border-radius: 0 0 15px 15px;
+}
+
+.experience {
+    display: block;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+textarea.experience {
+    height: 100%;
+}
+
+.table, td, th, tr, caption {
+    text-align: center;
+    color: #333;
+    border: 2px solid #999;
+    padding: 5px 30px;
+    background-color: #fff;
+}
+
+caption {
+    display: table-caption;
+    font-size: xx-large;
+    border-bottom: none;
+}
+
+.table-container {
+    height: 100%;
+    overflow: auto;
+}
+
+.table {
+    margin: 15px;
+    width: 97%;
+}
+
+.table, td, th, tr {
+    font-size: 1.1rem;
+    border-collapse: collapse;
+}
+
+.img-in-table {
+    height: 50px;
+    width: 50px;
+    border-radius: 100%;
+}
+
+.inbox-table {
+    table-layout: fixed;
+}
+
+.inbox-table, .inbox-table tr, .inbox-table td, .inbox-table caption {
+    border-left: none;
+    border-right: none;
+    text-align: left;
+}
+
+.inbox-table td a {
+    text-align: center;
+}
+
+.inbox-table tr {
+    height: 1em;
+}
+
+.inbox-table tr td {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+small {
+    color: #999;
+}
+
+.msg-details {
+    border-bottom: 1px solid #ddd;
+}
+
+.msg-body {
+    max-height: 50vh;
+    line-height: 1.7;
+    padding: 10px;
+    font-size: 1.2rem;
+    white-space: pre-wrap;
+    overflow-y: scroll;
+}
+
+.msg-footer {
+    padding: 10px;
+    margin: 10px;
+}

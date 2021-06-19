@@ -1,0 +1,222 @@
+/* Home page styles  */
+
+@import url("../../base_style.css");
+body {
+    color: white;
+    background: no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Header Styles */
+
+header {
+    height: 100vh;
+    margin: 20px, 0;
+}
+
+nav {
+    overflow: hidden;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+nav a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+nav a:hover {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.thumbnail, .profile {
+    display: block;
+    text-align: center;
+}
+
+.thumbnail {
+    margin-top: 100px;
+}
+
+/* main */
+
+.main {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+}
+
+section {
+    margin-bottom: 40px;
+    display: block;
+}
+
+/* profile styles */
+
+.about-me {
+    height: 20em;
+    background-color: #fffba6;
+    color: black;
+}
+
+.about {
+    float: left;
+    width: 65%;
+    word-wrap: break-word;
+    height: 100%;
+    border-right: 1px solid white;
+}
+
+.about h1 {
+    margin-bottom: 1rem;
+}
+
+.about p {
+    margin-right: .3rem;
+    white-space: pre-wrap;
+}
+
+.detail {
+    margin-left: 10px;
+    float: right;
+    width: 32%;
+    line-height: 1.5;
+}
+
+.about-me, .careers, .educations, .skills, .langs, .contact-form, .contact-items {
+    padding: 30px;
+    text-align: left;
+    margin: 15px 0 15px 0;
+}
+
+.educations {
+    background-color: #2e5932;
+}
+
+.careers {
+    background-color: white;
+    color: #2e5932;
+}
+
+.single-experience {
+    line-height: 1.8;
+}
+
+.single-experience h3 {
+    margin-top: 1.2rem;
+}
+
+.single-experience h4 {
+    display: inline-block;
+    margin: .3rem 2rem .7rem 0;
+}
+
+div h3 {
+    font-weight: bold;
+    color: #48c268;
+}
+
+div h5 {
+    display: inline-block;
+    margin-top: 0;
+    margin-right: 20px;
+}
+
+.contact-form {
+    background-color: white;
+    color: #7d384a;
+    padding-right: 50px;
+}
+
+.be-in-touch {
+    font-size: 1.3rem;
+    background-color: #7d384a;
+    line-height: 2;
+    text-align: center;
+    padding: 20px;
+}
+
+.be-in-touch a {
+    color: white;
+}
+
+.be-in-touch a:hover {
+    text-decoration: underline;
+}
+
+.logo {
+    width: 25px;
+    height: 25px;
+    border-radius: 100%;
+    margin-right: 5px;
+}
+
+div a {
+    display: block;
+    text-decoration: none;
+}
+
+input, textarea {
+    background-color: #fff;
+    color: #1d1d1d;
+    border-radius: .5rem;
+    padding: .4rem .75rem;
+}
+
+input:not([type='submit']), textarea {
+    width: 100%;
+    margin-bottom: 1rem;
+    border: 1px solid #ced4da;
+}
+
+form label {
+    display: block;
+    margin-bottom: 16px;
+}
+
+input:not([type='submit']) {
+    height: 50px;
+}
+
+input:not([type='submit']):focus, textarea:focus {
+    border: 1px solid #7d384a;
+    outline: none;
+}
+
+input[type='submit'] {
+    width: 25%;
+    margin-left: 75%;
+    margin-top: 20px;
+    box-shadow: none;
+    border-color: #7d384a;
+    border-style: solid;
+    display: inherit;
+}
+
+input[type='submit']:focus {
+    background-color: #7d384a;
+    color: white;
+}
+
+.msg-box {
+    float: left;
+}
+
+/* footer styles */
+
+footer {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+small {
+    display: block;
+}
