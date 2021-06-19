@@ -1,0 +1,29 @@
+{% extends 'admin/base.html' %}
+
+
+{% block title %}{{ message.subject }}{% endblock %}
+
+
+{% block main %}
+<div class="card">
+    <div class="card-header bg-warning">
+        <h4>{{ message.subject }}</h4>
+    </div>
+    <div class="card-body">
+        <div class="msg-details">
+            <h5>From: {{ message.sender_email }} </h5>
+            <small>in {{message.postage_date.strftime("%Y/%m/%d") }} at {{ message.postage_date.strftime("%H:%M")
+                }}</small>
+        </div>
+        <div class="msg-body">
+            <p>{{ message.msg }}</p>
+        </div>
+        <div class="msg-footer">
+            <a class="btn bg-danger" href="{{ url_for('admin.delete_message', id=message.id) }}"
+                style="float: right; text-align: center;">Delete</a>
+                <a class="btn bg-safe" href="mailto:{{ message.sender_email }}"
+                style="float: right; text-align: center;">Reply</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'admin/base.html' %}
+
+
+{% block title %}Inbox{% endblock %}
+
+
+{% block main %}
+<div class="table-container">
+    <table class="table inbox-table">
+        <caption>Your Messages</caption>
+        <tbody>
+            {% if messages %}
+            {% for msg in messages %}
+            <tr>
+                <td>from: {{ msg.sender_email }} <br>
+                    <h6 style="display: inline;">{{ msg.subject }}</h6>: <small>{{ msg.msg }}</small> <br>
+                    <small style="float: right;">
+                        in {{msg.postage_date.strftime("%Y/%m/%d") }} at {{msg.postage_date.strftime("%H:%M") }}
+                    </small>
+                </td>
+                <td style="width: 15%;">
+                    <a class="btn bg-safe" href="{{ url_for('admin.single_message', id=msg.id) }}">Read More</a>
+                    <a class="btn bg-danger" href="{{ url_for('admin.delete_message', id=msg.id) }}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <td colspan="5">You don't have any messages!</td>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

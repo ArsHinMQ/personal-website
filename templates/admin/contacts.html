@@ -1,0 +1,55 @@
+{% extends 'admin/base.html' %}
+
+
+{% block title %}Set Contact{% endblock %}
+
+
+{% block main %}
+<div class="table-container">
+    <form id="contact-form" action="{{ url_for('admin.contacts') }}" method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+    </form>
+    <table class="table">
+        <caption>Contacts</caption>
+        <thead>
+            <tr>
+                <th style="width: 3%;">ID</th>
+                <th style="width: 20%;">Name</th>
+                <th style="width: 50%;">Address</th>
+                <th style="width: 10%;">Logo</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>#</td>
+                <td>{{ form.name(class="in-table-input", form="contact-form") }}</td>
+                <td>{{ form.address(class="in-table-input", form="contact-form") }}</td>
+                <td><label for="logo" class="custom-file-upload"
+                        style="margin: 0; padding: inherit;">Import</label>
+                    {{ form.logo(id="logo", form="contact-form") }}</td>
+                <td>
+                    <input class="btn bg-success" type="submit" value="Create" form="contact-form">
+                </td>
+            </tr>
+            {% for contact in contacts %}
+            <tr>
+                <td>{{ contact.id }}</td>
+                <td>{{ contact.name }}</td>
+                <td>{{ contact.address }}</td>
+                <td>
+                    {% if contact.logo %}
+                    <img class="img-in-table" src="{{ url_for('static', filename='images/logo/' + contact.logo) }}" alt="contact-logo">
+                    {% else %}
+                    <p style="color: #999;">Empty</p>
+                    {% endif %}
+                </td>
+                <td>
+                    <a class="btn bg-danger" href="{{ url_for('admin.delete_contact', id=contact.id) }}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

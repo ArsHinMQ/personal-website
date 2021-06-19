@@ -1,0 +1,41 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Set Profile{% endblock %}
+
+
+{% block main %}
+<div class="container" style="background-image: url({{ url_for('static', filename='images/bg/' + profile.bg) }});">
+    <form action="{{ url_for('admin.set_profile') }}" method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="display-inline-block">
+            <div class="thumbnail">
+                <img src="{{ url_for('static', filename='images/thumbnail/' + profile.thumbnail) }}" alt="thumbnail">
+            </div>
+            <label for="thumbnail" class="custom-file-upload">Change The Profile Image
+                <a class="btn bg-danger" href="{{ url_for('admin.delete_thumbnail') }}">Default</a>
+            </label>
+            {{ form.thumbnail(id='thumbnail') }}
+            <label for="bg" class="custom-file-upload">Change The Bakcground Image
+                <a class="btn bg-danger" href="{{ url_for('admin.delete_background') }}">Default</a>
+            </label>
+            {{ form.bg(id='bg') }}
+        </div>
+        <div class="display-inline-block">
+            <label id="first-label" for="fullname">Full Name</label>
+            {{ form.fullname(id="fullname", class="profile", placeholder="Enter Your Fullname...") }}
+            <label for="age">Age</label>
+            {{ form.age(id="age", class="profile", placeholder="Enter Your Age...") }}
+            <label for="location">Location</label>
+            {{ form.location(id="location", class="profile", placeholder="Enter Your Location...") }}
+            <button type="reset" onclick="window.location.reload()" class="bg-success cancel">Cancel</button>
+        </div>
+        <div class="display-inline-block">
+            <div style="margin-left: 35px;">
+            <label id="first-label" for="about">About</label>
+            {{ form.about(id="about", class="profile", cols="34", rows="13", placeholder="Write About Your-self...") }}
+            <input type="submit" value="Edit" class="bg-safe">
+        </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

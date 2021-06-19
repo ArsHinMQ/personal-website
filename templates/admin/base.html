@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin/styles/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin/styles/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Admin Panel | {% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    {% include 'admin/partials/flash.html' %}
+    <header>
+        <nav>
+            <ul class="left-nav-ele">
+                <li><a href="{{ url_for('index') }}">View</a></li>
+                <li><a href="{{ url_for('admin.logout') }}">Logout</a></li>
+            </ul>
+            <ul class="right-nav-ele">
+                <a href="{{ url_for('admin.messages') }}">
+                    <li class="fa fa-comment-o"></li>
+                </a>
+                <a href="{{ url_for('admin.logout') }}">
+                    <li class="fa fa-sign-out" style="color: darkred;"></li>
+                </a>
+            </ul>
+        </nav>
+    </header>
+    <div class="content">
+        <aside>
+            <div class="title">
+                <h1>Admin Panel</h1>
+            </div>
+            <ul class="container">
+                <li class="profile-panel">
+                    <h4 style="background-color: #fffba6;">Profile</h4>
+                    <ul class="sub">
+                        <a href="{{ url_for('admin.set_profile') }}">
+                            <li class="fa fa-user-o"></li>
+                            Set Profile
+                        </a>
+                        <a href="{{ url_for('admin.change_password') }}">
+                            <li class="fa fa-lock"></li>
+                            Change Your Password
+                        </a>
+                    </ul>
+                </li>
+                <li class="resume">
+                    <h4 style="background-color: #a6cfff;">Abilities</h1>
+                        <ul class="sub abilities">
+                            <a href="{{ url_for('admin.skills') }}">
+                                <li class="fa fa-check"></li>
+                                Skills
+                            </a>
+                            <a href="{{ url_for('admin.languages') }}">
+                                <li class="fa fa-language"></li>
+                                Languages
+                            </a>
+                        </ul>
+                        <h4 style="background-color: #48c268;">Experiences</h4>
+                        <ul class="sub experiences">
+                            <a href="{{ url_for('admin.educations') }}">
+                                <li class="fa fa-pencil"></li>
+                                Educations
+                            </a>
+                            <a href="{{ url_for('admin.careers') }}">
+                                <li class="fa fa-coffee"></li>
+                                Careers
+                            </a>
+                        </ul>
+                </li>
+                <li class="contact">
+                    <h4 style="background-color: #ffb0ca;">Contact</h4>
+                    <ul class="sub">
+                        <a href="{{ url_for('admin.contacts') }}">
+                            <li class="fa fa-paperclip"></li>
+                            Set Contact
+                        </a>
+                        <a href="{{ url_for('admin.messages') }}">
+                            <li class="fa fa-comment-o"></li>
+                            Check Your Inbox
+                        </a>
+                    </ul>
+                </li>
+        </aside>
+        <main>{% block main %}{% endblock %}</main>
+    </div>
+    <footer>
+        <script src="{{ url_for('static', filename='admin/js/demo.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/progress_bar.js') }}"></script>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+{% extends 'admin/base.html' %}
+
+
+{% block title %}{{ kind.title() + "s" }}{% endblock %}
+
+
+{% block main %}
+<div class="table-container">
+    <table class="table">
+        <caption>{{ kind.title() }}
+            <a href="{{ url_for('admin.new_experience', kind=kind) }}" class="btn bg-success" style="float: right; font-size: initial; padding: 15px 0;">Add New</a>
+        </caption>
+        <thead>
+            <tr>
+                <th style="width: 1%;">ID</th>
+                <th style="width: 25%;">Title</th>
+                <th style="width: 15%;">Strat Date</th>
+                <th style="width: 15%;">Finish Date</th>
+                <th style="width: 25%;">Location</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for experience in experiences %}
+            <tr>
+                <td>{{ experience.id }}</td>
+                <td>{{ experience.title }}</td>
+                <td>{{ experience.start_date }}</td>
+                <td>{{ experience.finish_date }}</td>
+                <td>{{ experience.location }}</td>
+                <td>
+                    <a class="btn bg-warning" href="{{ url_for('admin.edit_experience', id=experience.id) }}">Edit</a>
+                    <a class="btn bg-danger" href="{{ url_for('admin.delete_experience', id=experience.id) }}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

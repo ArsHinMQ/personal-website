@@ -1,0 +1,34 @@
+{% extends 'admin/base.html' %}
+
+
+{% block title %}Edit Experience{% endblock %}
+
+
+{% block main %}
+<div class="card">
+    <div class="card-header bg-safe">
+        <h3>Edit Experience</h3>
+    </div>
+    <div class="card-body">
+        <form action="{{ url_for('admin.edit_experience', id=id) }}" method="POST">
+            {{ form.hidden_tag() }}
+            <div class="display-inline-block">
+                <label for="title">Title</label>
+                {{ form.title(id='title', class="experience", placeholder="Enter Title...") }}
+                <label for="start_date">Start Date</label>
+                {{ form.start_date(id='start_date', class="experience", placeholder="Enter Start Date...") }}
+                <label for="finish_date">Finish Date</label>
+                {{ form.finish_date(id='finish_date', class="experience", placeholder="Enter Finish Date") }}
+                <label for="location">Location</label>
+                {{ form.location(id='location', class="experience", placeholder="Enetr Location") }}
+                <button type="reset" onclick="window.location.reload()" class="bg-success cancel">Cancel</button>
+            </div>
+            <div class="display-inline-block">
+                <label for="description">Description</label>
+                {{ form.description(id=description, class="experience", rows="12", placeholder="Write More...") }}
+            <input type="submit" value="Edit" class="bg-safe">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
