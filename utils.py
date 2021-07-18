@@ -17,7 +17,7 @@ def admin_only(func):
     return inner
 
 
-def check_image(filename, allowed_formats={"png", "jpg", "eps", "jpeg"}):
+def check_image(filename, allowed_formats={"png", "jpg", "eps", "jpeg", "svg"}):
     file_format = filename.split('.')[-1].lower()
     for f in allowed_formats:
         if file_format == f:
