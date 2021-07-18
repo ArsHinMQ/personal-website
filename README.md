@@ -1,6 +1,6 @@
 # personal website
 ## What's this?
-This is a simple personal/resume website wrriten by Flask web framework and pure CSS, HTML, JS. <br />
+This is a simple personal/resume website wrriten by Flask, Bootstrap, and a little of custom JavaScript & CSS. <br />
 Hope you enjoy =)
 
 ## Requirements
