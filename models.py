@@ -13,11 +13,11 @@ class Admin(db.Model):
     age = Column(Integer, nullable=True)
     location = Column(String(60), nullable=True)
     about = Column(Text, nullable=True)
-    thumbnail = Column(String(256), nullable=True, default="thumbnail-img.jpg") 
-    bg = Column(String(256), nullable=True, default="background-img.jpg")
+    thumbnail = Column(String(256), nullable=True)
+    bg = Column(String(256), nullable=True)
 
     def __init__(self, **kw):
-        for key, value in kw.items(): 
+        for key, value in kw.items():
             setattr(self, key, value)
 
     @validates("password")
@@ -42,7 +42,7 @@ class Ability(db.Model):
         self.name = name
         self.scale = scale
         self.kind = kind
-        
+
 
     @validates("scale")
     def set_scale(self, key, value):
@@ -86,8 +86,8 @@ class Contact(db.Model):
     logo = Column(String(256), nullable=True)
 
     def __init__(self, name, address, logo=None):
-        self.name = name 
-        self.address = address 
+        self.name = name
+        self.address = address
         self.logo = logo
 
 
@@ -104,4 +104,3 @@ class Message(db.Model):
         self.sender_email = email
         self.subject = subject
         self.msg = msg
-
