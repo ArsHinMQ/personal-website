@@ -1,51 +1,52 @@
 {% extends 'admin/base.html' %}
 
-{% block title %}{{ kind }}{% endblock %}
+{% block title %}{{ kind.title() + 's' }}{% endblock %}
 
-
-{% block main %}
-<div class="table-container">
-    <form id="ability-form" action="{{ url_for('admin.new_ability', kind=kind.lower()) }}" method="POST">
+{% block content %}
+<div class="conatienr-fluid my-4">
+    <div class="col-md-7 m-auto">
+        <div class="input-group">
+            <input type="search" name="ability" id="searchField" class="form-control ability-input" placeholder="Search for.." onkeyup="filter(this)">
+            <div class="input-group-append">
+                <span class="bg-orange input-group-text text-light">
+                    <li class="fa fa-search"></li>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<section id="new-ability" class="container-fluid">
+    <form id="ability-form" action="{{ url_for('admin.new_ability', kind=kind) }}" method="POST">
         {{ form.hidden_tag() }}
+        <div class="form-row my-2">
+            <div class="col-xl-8 form-group">
+                <label for="abilitiyName">Name:</label>
+                {{ form.name(id="abilityName", class="form-control ability-input", placeholder="Name...") }}
+            </div>
+            <div class="col-xl-4 form-group">
+                <label for="abilityScale">Scale:</label>
+                {{ form.scale(id="abilityScale", class="form-control ability-input", placeholder="Scale", onkeyup="updateProgressScale(this.value)") }}
+            </div>
+        </div>
+        <div class="form-row my-2">
+            <div class="col-xl-12 form-group">
+                <label for="abilityProgress">Progress:</label>
+                {{ form.progress(id="abilityProgress", class="custom-range", oncchange="updateNumbericalScale(this.value)") }}
+            </div>
+        </div>
+        <input type="submit" class="btn bg-orange text-white float-right" value="Add">
     </form>
-    <table class="table">
-        <caption>{{ kind }}</caption>
-        <thead>
-            <tr>
-                <th style="width: 3%;">ID</th>
-                <th style="width: 20%;">Name</th>
-                <th style="width: 50%;">Progress</th>
-                <th style="width: 3%;">Scale</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>#</td>
-                <td>{{ form.name(class="in-table-input", form="ability-form",) }}</td>
-                <td>{{ form.progress(id='scale-connector-range', form="ability-form", onchange='setNumbericalInputAsRange()') }}</td>
-                <td>{{ form.scale(id='scale-connector-numberical', class="in-table-input", form="ability-form", onchange='setRangeAsNumbericalInput()') }}</td>
-                <td>
-                    <input class="btn bg-success" type="submit" value="Create" form="ability-form">
-                </td>
-            </tr>
-            {% for ability in abilities %}
-            <tr>
-                <td>{{ ability.id }}</td>
-                <td>{{ ability.name }}</td>
-                <td>
-                    <div class="progress-bar">
-                        <div class="progress-done bg-safe" data-done="{{ ability.scale }}">
-                        </div>
-                    </div>
-                <td>{{ ability.scale }}%</td>
-                <td>
-                    <a class="btn bg-warning" href="{{ url_for('admin.edit_ability', id=ability.id) }}">Edit</a>
-                    <a class="btn bg-danger" href="{{ url_for('admin.delete_ability', id=ability.id) }}">Delete</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+</section>
+<div id="ability" class="content">
+    {% for ability in abilities %}
+    <section id="{{ ability.name.replace(" ", "") }}" class="container-fluid">
+        <label for="{{ ability.name.replace(" ", "") + '-item'  }}">{{ ability.name }} - {{ ability.scale }}%</label>
+        <div id="{{ ability.name.replace(" ", "") + '-item' }}" class="custom-progress-bar">
+            <div class="progress-done" data-done="{{ ability.scale }}">
+            </div>
+        </div>
+        <a href="{{ url_for('admin.delete_ability', id=ability.id) }}" class="btn btn-danger float-right">Delete</a>
+    </section>
+    {% endfor %}
 </div>
 {% endblock %}

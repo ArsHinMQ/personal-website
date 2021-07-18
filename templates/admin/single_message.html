@@ -1,29 +1,33 @@
 {% extends 'admin/base.html' %}
 
+{% block title %}Read Message{% endblock %}
 
-{% block title %}{{ message.subject }}{% endblock %}
-
-
-{% block main %}
-<div class="card">
-    <div class="card-header bg-warning">
-        <h4>{{ message.subject }}</h4>
-    </div>
-    <div class="card-body">
-        <div class="msg-details">
-            <h5>From: {{ message.sender_email }} </h5>
-            <small>in {{message.postage_date.strftime("%Y/%m/%d") }} at {{ message.postage_date.strftime("%H:%M")
-                }}</small>
+{% block content %}
+<div id="single-message">
+    <header class="p-3 bg-white">
+        <div class="border-bottom pb-2">
+            <small class="float-right sent-date">
+                <li class="fa fa-clock"></li> {{message.postage_date.strftime("%Y/%m/%d") }} at {{message.postage_date.strftime("%H:%M") }}
+            </small>
+            <h5>{{ message.subject }}</h5>
+            <small class="text-muted">From: {{ message.sender_email }}</small>
         </div>
-        <div class="msg-body">
-            <p>{{ message.msg }}</p>
+        <div class="pt-2 pb-3">
+            <div class="float-left"><a class="text-info" href="{{ url_for('admin.messages') }}">Back</a></div>
+            <div class="float-right">
+                <a class="mx-1" href="{{ url_for('admin.delete_message', id=message.id) }}">
+                    <li class="fa fa-trash text-danger"></li>
+                </a>
+                <a class="mx-1" href="mailto:{{ message.sender_email }}">
+                    <li class="fa fa-reply text-info"></li>
+                </a>
+            </div>
         </div>
-        <div class="msg-footer">
-            <a class="btn bg-danger" href="{{ url_for('admin.delete_message', id=message.id) }}"
-                style="float: right; text-align: center;">Delete</a>
-                <a class="btn bg-safe" href="mailto:{{ message.sender_email }}"
-                style="float: right; text-align: center;">Reply</a>
-        </div>
+    </header>
+    <div id="msg-body" class="p-4">
+        <p>
+            {{ message.msg }}
+        </p>
     </div>
 </div>
 {% endblock %}

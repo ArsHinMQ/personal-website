@@ -1,34 +1,47 @@
 {% extends 'admin/base.html' %}
 
-
 {% block title %}Edit Experience{% endblock %}
 
 
-{% block main %}
-<div class="card">
-    <div class="card-header bg-safe">
-        <h3>Edit Experience</h3>
-    </div>
-    <div class="card-body">
-        <form action="{{ url_for('admin.edit_experience', id=id) }}" method="POST">
-            {{ form.hidden_tag() }}
-            <div class="display-inline-block">
-                <label for="title">Title</label>
-                {{ form.title(id='title', class="experience", placeholder="Enter Title...") }}
-                <label for="start_date">Start Date</label>
-                {{ form.start_date(id='start_date', class="experience", placeholder="Enter Start Date...") }}
-                <label for="finish_date">Finish Date</label>
-                {{ form.finish_date(id='finish_date', class="experience", placeholder="Enter Finish Date") }}
-                <label for="location">Location</label>
-                {{ form.location(id='location', class="experience", placeholder="Enetr Location") }}
-                <button type="reset" onclick="window.location.reload()" class="bg-success cancel">Cancel</button>
+{% block content %}
+<section id="edit-experience" class="container-fluid">
+    <form action="{{ url_for('admin.edit_experience', id=id) }}" method="post">
+        {{ form.hidden_tag() }}
+        <div class="form-row my-2">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    {{ form.title(id="title", placeholder="Title...", class="form-control experience-input") }}
+                    <!-- <input type="text" id="title" placeholder="Title..." class="form-control experience-input"> -->
+                </div>
+                <div class="form-group">
+                    <label for="start-date">Start Date</label>
+                    {{ form.start_date(id="start-date", placeholder="Start date...", class="form-control experience-input") }}
+                    <!-- <input type="text" id="start-date" placeholder="Start date..." class="form-control experience-input"> -->
+                </div>
+                <div class="form-group">
+                    <label for="finish-date">Finish Date</label>
+                    {{ form.finish_date(id="finish-date", placeholder="Finish date...", class="form-control experience-input") }}
+                    <!-- <input type="text" id="finish-date" placeholder="Finish date..." class="form-control experience-input"> -->
+                </div>
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    {{ form.location(id="location", placeholder="Location...", class="form-control experience-input") }}
+                    <!-- <input type="text" id="location" placeholder="Location..." class="form-control experience-input"> -->
+                </div>
             </div>
-            <div class="display-inline-block">
-                <label for="description">Description</label>
-                {{ form.description(id=description, class="experience", rows="12", placeholder="Write More...") }}
-            <input type="submit" value="Edit" class="bg-safe">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    {{ form.description(id="description", class="form-control experience-input", rows="14") }}
+                    <!-- <textarea class="form-control experience-input" rows="14"></textarea> -->
+                </div>
             </div>
-        </form>
-    </div>
-</div>
+        </div>
+        <div class="float-right">
+            <a href="{{ url_for(private_page) }}" class="btn btn-secondary">Back</a>
+            <input type="submit" class="btn btn-warning" value="Edit">
+        </div>
+    </form>
+</section>
 {% endblock %}

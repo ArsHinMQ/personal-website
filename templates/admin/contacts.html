@@ -1,55 +1,67 @@
 {% extends 'admin/base.html' %}
 
+{% block title %}Contacts{% endblock %}
 
-{% block title %}Set Contact{% endblock %}
-
-
-{% block main %}
-<div class="table-container">
-    <form id="contact-form" action="{{ url_for('admin.contacts') }}" method="POST" enctype="multipart/form-data">
+{% block content %}
+<div class="conatienr-fluid my-3 ">
+    <div class="col-md-7 m-auto">
+        <div class="input-group">
+            <input type="search" name="contact" id="searchField" class="form-control contact-input" placeholder="Enter contact name" onkeyup="filter(this)">
+            <div class="input-group-append">
+                <span class="bg-pink input-group-text text-light">
+                    <li class="fa fa-search"></li>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<section id="new-contact" class="container-fluid">
+    <form action="{{ url_for('admin.contacts') }}" method="POST" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
+        <div class="form-row">
+            <div class="form-group col-xl-1 mt-4">
+                {{ form.logo(class="d-none") }}
+                <button class="custom-file-btn rounded-circle mt-2 bg-pink" data-target="tooltip" title="Choose the media's logo" type="button" onclick="clickRealBtn(this, true)">
+                    <li class="fa fa-picture-o"></li>
+                </button>
+            </div>
+            <div class="form-group col-xl-5">
+                <label for="name">Media Name: </label>
+                {{ form.name(id="name", class="form-control contact-input", placeholder="Media name...") }}
+            </div>
+            <div class="form-group col-xl-6">
+                <label for="address">Address</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">https://</span>
+                    </div>
+                    {{ form.address(id="address", class="form-control contact-input", placeholder="Address...") }}
+                </div>
+            </div>
+        </div>
+        <input type="submit" class="btn bg-pink float-right text-white" value="Add">
     </form>
-    <table class="table">
-        <caption>Contacts</caption>
-        <thead>
-            <tr>
-                <th style="width: 3%;">ID</th>
-                <th style="width: 20%;">Name</th>
-                <th style="width: 50%;">Address</th>
-                <th style="width: 10%;">Logo</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>#</td>
-                <td>{{ form.name(class="in-table-input", form="contact-form") }}</td>
-                <td>{{ form.address(class="in-table-input", form="contact-form") }}</td>
-                <td><label for="logo" class="custom-file-upload"
-                        style="margin: 0; padding: inherit;">Import</label>
-                    {{ form.logo(id="logo", form="contact-form") }}</td>
-                <td>
-                    <input class="btn bg-success" type="submit" value="Create" form="contact-form">
-                </td>
-            </tr>
-            {% for contact in contacts %}
-            <tr>
-                <td>{{ contact.id }}</td>
-                <td>{{ contact.name }}</td>
-                <td>{{ contact.address }}</td>
-                <td>
-                    {% if contact.logo %}
-                    <img class="img-in-table" src="{{ url_for('static', filename='images/logo/' + contact.logo) }}" alt="contact-logo">
-                    {% else %}
-                    <p style="color: #999;">Empty</p>
-                    {% endif %}
-                </td>
-                <td>
-                    <a class="btn bg-danger" href="{{ url_for('admin.delete_contact', id=contact.id) }}">Delete</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+</section>
+<div id="contacts" class="content">
+    {% for contact in contacts %}
+    <section id="{{ contact.name.replace(' ', '') }}" class="container-fluid">
+        <div class="row align-items-center">
+            {% if contact.logo %}
+            <div class="col-xl-1">
+                <img src="{{ url_for('static', filename='images/logo/' + contact.logo) }}" class="thumbnail-img rounded-circle" alt="logo" style="width: 4rem">
+            </div>
+            {% endif %}
+            <div class="col-xl-3">
+                <h4>{{ contact.name }}</h4>
+            </div>
+            <div class="col-xl-6">
+                <h5>Address: <a href="https:// + {{ contact.address }}">{{ contact.address }}</a></h5>
+            </div>
+        </div>
+        <div class="float-right">
+            <a href="{{ url_for('admin.delete_contact', id=contact.id) }}" class="btn btn-danger">Delete</a>
+        </div>
+    </section>
+    {% endfor %}
 </div>
 {% endblock %}

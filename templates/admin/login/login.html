@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin/login/styles/custom.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/base_style.css') }}">
+    <title>Document</title>
+</head>
+
+<body>
+    {% include 'partials/flash.html' %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-7 col-md-12 d-flex justify-content-center align-items-center">
+                <div class="col-xl-10 col-md-12 p-3">
+                    <header class="text-secondary border-bottom pb-3 my-3">
+                        <h2 class="text-info">Welcome Back, Me!</h2>
+                        <span>Since this is a personal website, if you are not the only admin press the <kbd class="bg-secondary">Back</kbd> button to redirect to previous page!</span>
+                    </header>
+                    <div>
+                        <form action="{{ url_for('admin.login') }}" id="login-form" method="POST">
+                            {{ form.hidden_tag() }}
+                            <div class="form-group border-bottom pt-3 pb-5 my-3">
+                                <label for="pwd">Password:</label>
+                                {{ form.password(id="pwd", class="form-control", placeholder="Password...") }}
+                            </div>
+                            <div class="float-right">
+                                <a href="#" class="btn btn-secondary">Back</a>
+                                <button class="btn btn-primary" form="login-form">Login</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-5 col-md-12 bg-img" style="background-image: url({{ url_for('static', filename='images/bg/' + profile.bg) }})">
+                <div class="set-opacity d-flex justify-content-center align-items-center text-white">
+                    <div class="col-md-10 text-center">
+                        <img class="thumbnail-img rounded-circle mt-5 mb-3" src="{{ url_for('static', filename='images/thumbnail/' + profile.thumbnail) }}" style="width: 13rem">
+                        <h3 class="text-light">{{ profile.fullname }}</h3>
+                        <span class="overflow-hidden">{{ profile.about }}</spna>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    </footer>
+</body>
+
+</html>
