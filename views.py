@@ -31,7 +31,7 @@ def index():
         flash("Your Message sended", "success")
         return redirect(url_for('index'))
 
-    return render_template('index.html',
+    return render_template('index/index.html',
                            profile=profile,
                            skills=skills,
                            langs=langs,
