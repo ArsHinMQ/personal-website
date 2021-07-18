@@ -20,14 +20,14 @@ def login(profile):
 
         if not profile.check_password(form.password.data):
             flash("Incorrect Password", "danger")
-            return render_template("admin/login.html", form=form, bg=profile.bg)
+            return render_template("admin/login/login.html", form=form, profile=profile)
 
         session['fullname'] = profile.fullname
         return redirect(url_for("admin.set_profile"))
     if session.get("fullname"):
         flash("You already logged in", 'safe')
         return redirect(url_for("admin.set_profile"))
-    return render_template("admin/login.html", form=form, bg=profile.bg, messages=messages)
+    return render_template("admin/login/login.html", form=form, profile=profile)
 
 
 # ------------------------------------ PROFILE ------------------------------------ #
@@ -124,30 +124,32 @@ def delete_background(profile):
 # ------------------------------------ RESUME ------------------------------------ #
 # ```````````````````````````````````` Abilities `````````````````````````````````` #
 @admin.route('/resume/skills', methods=['GET'])
+@and_profile
 @admin_only
-def skills():
+def skills(profile):
     form = AbilityForm(request.form)
     skills = reversed(Ability.query.filter(
         Ability.kind == 'skill').order_by(Ability.id).all())
-    return render_template('admin/abilities.html', form=form, abilities=skills, kind='Skills')
+    return render_template('admin/abilities.html', form=form, abilities=skills, kind='skill', profile=profile)
 
 
 @admin.route('/resume/languages', methods=['GET'])
+@and_profile
 @admin_only
-def languages():
+def languages(profile):
     form = AbilityForm(request.form)
     langs = reversed(Ability.query.filter(
         Ability.kind == 'lang').order_by(Ability.id).all())
-    return render_template('admin/abilities.html', form=form, abilities=langs, kind='Languages')
+    return render_template('admin/abilities.html', form=form, abilities=langs, kind='language', profile=profile)
 
 
 @admin.route('/resume/abilities/<string:kind>/new', methods=['POST'])
 @admin_only
 def new_ability(kind):
-    if not kind in ['languages', 'skills']:
+    if not kind in ['language', 'skill']:
         abort(404)
 
-    private_page = f"admin.{kind.lower()}"
+    private_page = f"admin.{kind}s"
     form = AbilityForm(request.form)
     if not form.validate_on_submit:
         abort(400)
@@ -156,7 +158,7 @@ def new_ability(kind):
         new_ability = Ability(
             name=form.name.data,
             scale=scale,
-            kind="skill" if kind == 'skills' else 'lang',
+            kind="skill" if kind == 'skill' else 'lang',
         )
         db.session.add(new_ability)
         db.session.commit()
@@ -168,37 +170,6 @@ def new_ability(kind):
         db.session.rollback()
         flash("This ability is allready exist", 'danger')
     return redirect(url_for(private_page))
-
-
-@admin.route('/resume/ability/edit/<int:id>', methods=['GET', 'POST'])
-@admin_only
-def edit_ability(id):
-    ability = Ability.query.filter(Ability.id == id).first()
-    if not ability:
-        abort(404)
-
-    private_page = f"admin.{ability.kind}s"
-    form = AbilityForm(obj=ability)
-
-    if request.method == "POST":
-        if not form.validate_on_submit:
-            abort(400)
-        try:
-            ability.name = form.name.data
-            ability.scale = form.scale.data if form.scale.data else form.progress
-            db.session.commit()
-            flash("Ability edited!", "success")
-            return redirect(url_for(private_page))
-        except ValueError as e:
-            flash(str(e), 'warning')
-        except IntegrityError:
-            db.session.rollback()
-            flash("This ability is already exist", "danger")
-
-    return render_template("admin/edit_ability.html",
-                           id=id,
-                           form=form,
-                           )
 
 
 @admin.route('/resume/delete/ability/<int:id>', methods=['GET'])
@@ -216,61 +187,62 @@ def delete_ability(id):
 
 # ```````````````````````````````````` Experiences `````````````````````````````````` #
 @admin.route('/resume/educations', methods=['GET'])
+@and_profile
 @admin_only
-def educations():
+def educations(profile):
+    form = ExperienceForm(request.form)
     educations = reversed(Experience.query.filter(
         Experience.kind == "education").order_by(Experience.id).all())
     return render_template("admin/experiences.html",
                            experiences=educations,
-                           kind='education'
+                           form=form,
+                           kind='education',
+                           profile=profile
                            )
 
 
 @admin.route('/resume/careers', methods=['GET'])
+@and_profile
 @admin_only
-def careers():
-    careers = Experience.query.filter(
-        Experience.kind == "career").order_by(Experience.id).all()
+def careers(profile):
+    form = ExperienceForm(request.form)
+    careers = reversed(Experience.query.filter(
+        Experience.kind == "career").order_by(Experience.id).all())
     return render_template("admin/experiences.html",
                            experiences=careers,
-                           kind="career"
+                           form=form,
+                           kind="career",
+                           profile=profile
                            )
 
 
-@admin.route('/resume/experiences/<string:kind>/new/', methods=['GET', 'POST'])
+@admin.route('/resume/experiences/<string:kind>/new/', methods=['POST'])
 @admin_only
 def new_experience(kind):
     if not kind in ("career", "education"):
         abort(404)
     private_page = f"admin.{kind.lower()}s"
     form = ExperienceForm(request.form)
+    if not form.validate_on_submit:
+        abort(400)
 
-    if request.method == 'POST':
-
-        if not form.validate_on_submit:
-            abort(400)
-
-        new_experience = Experience(form.title.data,
-                                    form.start_date.data,
-                                    form.finish_date.data,
-                                    form.location.data,
-                                    kind,
-                                    form.description.data
-                                    )
-        db.session.add(new_experience)
-        db.session.commit()
-        flash("New abillity added successfully!", "success")
-        return redirect(url_for(private_page))
-
-    return render_template("admin/new_experience.html",
-                           form=form,
-                           kind=kind,
-                           )
+    new_experience = Experience(form.title.data,
+                                form.start_date.data,
+                                form.finish_date.data,
+                                form.location.data,
+                                kind,
+                                form.description.data
+                                )
+    db.session.add(new_experience)
+    db.session.commit()
+    flash("New abillity added successfully!", "success")
+    return redirect(url_for(private_page))
 
 
 @admin.route('/resume/experiences/edit/<int:id>', methods=['GET', 'POST'])
+@and_profile
 @admin_only
-def edit_experience(id):
+def edit_experience(profile, id):
     experience = Experience.query.filter(Experience.id == id).first()
     if not experience:
         abort(404)
@@ -293,6 +265,8 @@ def edit_experience(id):
     return render_template('admin/edit_experience.html',
                            form=form,
                            id=id,
+                           private_page=private_page,
+                           profile=profile
                            )
 
 
@@ -312,8 +286,9 @@ def delete_experience(id):
 
 # ------------------------------------ CONTACTS ------------------------------------ #
 @admin.route('/contacts', methods=['GET', 'POST'])
+@and_profile
 @admin_only
-def contacts():
+def contacts(profile):
     contacts = reversed(Contact.query.all())
     form = ContactForm()
     if request.method == 'POST':
@@ -338,7 +313,7 @@ def contacts():
             db.session.rollback()
             flash("Duplicated contact", "danger")
 
-    return render_template('admin/contacts.html', contacts=contacts, form=form)
+    return render_template('admin/contacts.html', contacts=contacts, form=form, profile=profile)
 
 
 @admin.route('contacts/<int:id>/delete', methods=['GET'])
@@ -353,21 +328,23 @@ def delete_contact(id):
     return redirect(url_for('admin.contacts'))
 
 
-@admin.route('/contact/messages')
+@admin.route('/contact/inbox')
+@and_profile
 @admin_only
-def messages():
+def messages(profile):
     messages = reversed(Message.query.order_by(Message.postage_date).all())
-    return render_template('admin/inbox.html', messages=messages)
+    return render_template('admin/inbox.html', messages=messages, profile=profile)
 
 
 @admin.route('contact/messages/<int:id>')
+@and_profile
 @admin_only
-def single_message(id):
+def single_message(profile, id):
     message = Message.query.filter(Message.id == id).first()
     if not message:
         abort(404)
 
-    return render_template('admin/single_message.html', message=message)
+    return render_template('admin/single_message.html', message=message, profile=profile)
 
 
 @admin.route('/contact/messages/<int:id>/delete', methods=['GET'])
