@@ -29,4 +29,4 @@ Hope you enjoy =)
 
 ## Contact 
 - Email: FatemMaqu@gmail.com
-- Project: https://github.com/your_username/personal-website/
+- Project: https://github.com/fatemmaqu/personal-website/
