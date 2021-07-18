@@ -1,40 +1,49 @@
 {% extends 'admin/base.html' %}
 
-{% block title %}Set Profile{% endblock %}
+{% block title %}Profile{% endblock %}
 
-
-{% block main %}
-<div class="container" style="background-image: url({{ url_for('static', filename='images/bg/' + profile.bg) }});">
-    <form action="{{ url_for('admin.set_profile') }}" method="POST" enctype="multipart/form-data">
+{% block content %}
+<div id="profile" class="container-fluid bg-img text-right" style="background-image: url({{ url_for('static', filename='images/bg/' + profile.bg) }})">
+    <form action="#" method="post" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
-        <div class="display-inline-block">
-            <div class="thumbnail">
-                <img src="{{ url_for('static', filename='images/thumbnail/' + profile.thumbnail) }}" alt="thumbnail">
+        <div class="form-group dropdown container">
+            <button class="custom-file-btn rounded-circle mt-2 text-light" data-toggle="dropdown" type="button">
+                <li class="fa fa-picture-o"></li>
+            </button>
+            <div class="dropdown-menu col-xl-4 col-md-5 col-sm-12">
+                {{ form.bg(class="d-none") }}
+                <a class="dropdown-item" href="#" onclick="clickRealBtn(this, true,'profile')">Change background picture</a>
+                <a class="dropdown-item" href="{{ url_for('admin.delete_background') }}">Set background picture as default</a>
             </div>
-            <label for="thumbnail" class="custom-file-upload">Change The Profile Image
-                <a class="btn bg-danger" href="{{ url_for('admin.delete_thumbnail') }}">Default</a>
-            </label>
-            {{ form.thumbnail(id='thumbnail') }}
-            <label for="bg" class="custom-file-upload">Change The Bakcground Image
-                <a class="btn bg-danger" href="{{ url_for('admin.delete_background') }}">Default</a>
-            </label>
-            {{ form.bg(id='bg') }}
         </div>
-        <div class="display-inline-block">
-            <label id="first-label" for="fullname">Full Name</label>
-            {{ form.fullname(id="fullname", class="profile", placeholder="Enter Your Fullname...") }}
-            <label for="age">Age</label>
-            {{ form.age(id="age", class="profile", placeholder="Enter Your Age...") }}
-            <label for="location">Location</label>
-            {{ form.location(id="location", class="profile", placeholder="Enter Your Location...") }}
-            <button type="reset" onclick="window.location.reload()" class="bg-success cancel">Cancel</button>
-        </div>
-        <div class="display-inline-block">
-            <div style="margin-left: 35px;">
-            <label id="first-label" for="about">About</label>
-            {{ form.about(id="about", class="profile", cols="34", rows="13", placeholder="Write About Your-self...") }}
-            <input type="submit" value="Edit" class="bg-safe">
-        </div>
+        <div class="container py-3 text-md-center text-white">
+            <div class="col-md-7 col-sm-12 m-auto">
+                <div class="form-group my-3">
+                    {{ form.thumbnail(class="d-none") }}
+                    <button type="button" class="thumbnail-btn rounded-circle m-auto d-block" data-toggle="tooltip" title="Change thumbnail picture" style="background-image: url({{ url_for('static', filename='images/thumbnail/' + profile.thumbnail) }});"
+                        onclick="clickRealBtn(this, true)">
+                        <li class="fa fa-camera fa-4x"></li>
+                    </button>
+                    <a href="{{ url_for('admin.delete_thumbnail') }}">Set thumbnail picture as default</a>
+                </div>
+                <div class="form-group my-3">
+                    <label for="fullname">Fullname:</label>
+                    {{ form.fullname(id="fullname", class="form-control", placeholder="Fullname...") }}
+                </div>
+                <div class="form-group my-3">
+                    <label for="age">Age:</label>
+                    {{ form.age(id="age", class="form-control", placeholder="Age...") }}
+                </div>
+                <div class="form-group my-3">
+                    <label for="location">Location:</label>
+                    {{ form.location(id="location", class="form-control", placeholder="Location...") }}
+                </div>
+                <div class="form-group my-3">
+                    <label for="about">About:</label>
+                    {{ form.about(rows="8", class="form-control", placeholder="About you...") }}
+                </div>
+                <input type="submit" class="btn btn-primary" value="Apply Changes" style="width: 100%">
+            </div>
         </div>
     </form>
 </div>

@@ -1,40 +1,70 @@
 {% extends 'admin/base.html' %}
 
-
 {% block title %}{{ kind.title() + "s" }}{% endblock %}
 
-
-{% block main %}
-<div class="table-container">
-    <table class="table">
-        <caption>{{ kind.title() }}
-            <a href="{{ url_for('admin.new_experience', kind=kind) }}" class="btn bg-success" style="float: right; font-size: initial; padding: 15px 0;">Add New</a>
-        </caption>
-        <thead>
-            <tr>
-                <th style="width: 1%;">ID</th>
-                <th style="width: 25%;">Title</th>
-                <th style="width: 15%;">Strat Date</th>
-                <th style="width: 15%;">Finish Date</th>
-                <th style="width: 25%;">Location</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for experience in experiences %}
-            <tr>
-                <td>{{ experience.id }}</td>
-                <td>{{ experience.title }}</td>
-                <td>{{ experience.start_date }}</td>
-                <td>{{ experience.finish_date }}</td>
-                <td>{{ experience.location }}</td>
-                <td>
-                    <a class="btn bg-warning" href="{{ url_for('admin.edit_experience', id=experience.id) }}">Edit</a>
-                    <a class="btn bg-danger" href="{{ url_for('admin.delete_experience', id=experience.id) }}">Delete</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+{% block content %}
+<div class="conatienr-fluid my-3 ">
+    <div class="col-md-7 m-auto">
+        <div class="input-group">
+            <input type="search" name="experience" id="searchField" class="form-control experience-input" placeholder="Search for.." onkeyup="filter(this)">
+            <div class="input-group-append">
+                <span class="bg-green input-group-text text-light">
+                    <li class="fa fa-search"></li>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<section id="new-experience" class="container-fluid">
+    <form id="experience-form" action="{{ url_for('admin.new_experience', kind=kind) }}" method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-row my-2">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    {{ form.title(id="title", placeholder="Title...", class="form-control experience-input") }}
+                </div>
+                <div class="form-group">
+                    <label for="start-date">Start Date</label>
+                    {{ form.start_date(id="start-date", placeholder="Start date...", class="form-control experience-input") }}
+                </div>
+                <div class="form-group">
+                    <label for="finish-date">Finish Date</label>
+                    {{ form.finish_date(id="finish-date", placeholder="Finish date...", class="form-control experience-input") }}
+                </div>
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    {{ form.location(id="location", placeholder="Location...", class="form-control experience-input") }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    {{ form.description(id="description", class="form-control experience-input", rows="14", placeholder="Description...") }}
+                </div>
+            </div>
+        </div>
+        <input type="submit" class="btn bg-green text-white float-right" value="Add">
+    </form>
+</section>
+<div id="experiences" class="content">
+    {% for experience in experiences %}
+    <section id="{{ experience.title.replace(' ','') }}" class="container-fluid">
+        <div class="row">
+            <div class="col-xl-4 col-md-12">
+                <h3>{{ experience.title }}</h3>
+                <small class="d-block">{{ experience.location }}</small>
+                <small>{{ experience.start_date }} - {{ experience.finish_date }}</small>
+            </div>
+            <div class="col-xl-8 col-md-12 experience-description overflow-hidden">
+                {{ experience.description }}
+            </div>
+        </div>
+        <div class="float-right">
+            <a href="{{ url_for('admin.edit_experience', id=experience.id) }}" class="btn btn-warning">Edit</a>
+            <a href="{{ url_for('admin.delete_experience', id=experience.id) }}" class="btn btn-danger">Delete</a>
+        </div>
+    </section>
+    {% endfor %}
 </div>
 {% endblock %}

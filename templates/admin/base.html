@@ -3,94 +3,90 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='admin/styles/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='admin/styles/font-awesome.min.css') }}">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Admin Panel | {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin/styles/custom.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/base_style.css') }}">
+    <title>Admin | {% block title %}{% endblock %}</title>
 </head>
 
 <body>
-    {% include 'admin/partials/flash.html' %}
     <header>
-        <nav>
-            <ul class="left-nav-ele">
-                <li><a href="{{ url_for('index') }}">View</a></li>
-                <li><a href="{{ url_for('admin.logout') }}">Logout</a></li>
-            </ul>
-            <ul class="right-nav-ele">
-                <a href="{{ url_for('admin.messages') }}">
-                    <li class="fa fa-comment-o"></li>
-                </a>
-                <a href="{{ url_for('admin.logout') }}">
-                    <li class="fa fa-sign-out" style="color: darkred;"></li>
-                </a>
-            </ul>
+        <nav class="navbar navbar-light bg-light border-bottom navbar-expand-sm">
+            <a id="toggler-button" href="#" class="navbar-brand">
+            </a>
+            <button type="button" name="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item"><a href="{{ url_for('admin.set_profile') }}" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="{{ url_for('index') }}" class="nav-link">View</a></li>
+                    <li class="nav-item"><a href="{{ url_for('admin.logout') }}" class="nav-link">Logout</a></li>
+                </ul>
+            </div>
         </nav>
     </header>
-    <div class="content">
-        <aside>
-            <div class="title">
-                <h1>Admin Panel</h1>
+    <div class="d-flex">
+        <aside class="bg-dark bg-img" style="background-image: url({{ url_for('static', filename='images/bg/' + profile.bg) }});">
+            <div class="set-opacity">
+
+                <div id="sidebar-head" class="pt-3 text-center text-white">
+                    <h3 class="border-bottom pb-3 mb-0">Admin Panel</h3>
+                </div>
+                <div id="sidebar-items" class="list-group">
+                    <a href="{{ url_for('admin.set_profile') }}" class="list-group-item">
+                        <li class="fa fa-user pr-1 pl-0"></li>
+                        Profile
+                    </a>
+                    <a href="{{ url_for('admin.change_password') }}" class="list-group-item">
+                        <li class="fa fa-lock pr-1 pl-0"></li>
+                        Password
+                    </a>
+                    <a href="{{ url_for('admin.skills') }}" class="list-group-item">
+                        <li class="fa fa-check pr-1 pl-0"></li>
+                        Skills
+                    </a>
+                    <a href="{{ url_for('admin.languages') }}" class="list-group-item">
+                        <li class="fa fa-language"></li>
+                        Languages
+                    </a>
+                    <a href="{{ url_for('admin.educations') }}" class="list-group-item">
+                        <li class="fa fa-pencil"></li>
+                        Educations
+                    </a>
+                    <a href="{{ url_for('admin.careers') }}" class="list-group-item">
+                        <li class="fa fa-coffee"></li>
+                        Careers
+                    </a>
+                    <a href="{{ url_for('admin.contacts') }}" class="list-group-item">
+                        <li class="fa fa-paper-plane"></li>
+                        Contact
+                    </a>
+                    <a href="{{ url_for('admin.messages') }}" class="list-group-item">
+                        <li class="fa fa-envelope"></li>
+                        Inbox
+                    </a>
+                </div>
             </div>
-            <ul class="container">
-                <li class="profile-panel">
-                    <h4 style="background-color: #fffba6;">Profile</h4>
-                    <ul class="sub">
-                        <a href="{{ url_for('admin.set_profile') }}">
-                            <li class="fa fa-user-o"></li>
-                            Set Profile
-                        </a>
-                        <a href="{{ url_for('admin.change_password') }}">
-                            <li class="fa fa-lock"></li>
-                            Change Your Password
-                        </a>
-                    </ul>
-                </li>
-                <li class="resume">
-                    <h4 style="background-color: #a6cfff;">Abilities</h1>
-                        <ul class="sub abilities">
-                            <a href="{{ url_for('admin.skills') }}">
-                                <li class="fa fa-check"></li>
-                                Skills
-                            </a>
-                            <a href="{{ url_for('admin.languages') }}">
-                                <li class="fa fa-language"></li>
-                                Languages
-                            </a>
-                        </ul>
-                        <h4 style="background-color: #48c268;">Experiences</h4>
-                        <ul class="sub experiences">
-                            <a href="{{ url_for('admin.educations') }}">
-                                <li class="fa fa-pencil"></li>
-                                Educations
-                            </a>
-                            <a href="{{ url_for('admin.careers') }}">
-                                <li class="fa fa-coffee"></li>
-                                Careers
-                            </a>
-                        </ul>
-                </li>
-                <li class="contact">
-                    <h4 style="background-color: #ffb0ca;">Contact</h4>
-                    <ul class="sub">
-                        <a href="{{ url_for('admin.contacts') }}">
-                            <li class="fa fa-paperclip"></li>
-                            Set Contact
-                        </a>
-                        <a href="{{ url_for('admin.messages') }}">
-                            <li class="fa fa-comment-o"></li>
-                            Check Your Inbox
-                        </a>
-                    </ul>
-                </li>
         </aside>
-        <main>{% block main %}{% endblock %}</main>
+        <main class="bg-light">
+            {% include 'partials/flash.html' %}
+            {% block content %}
+            {% endblock %}
+        </main>
     </div>
+
+
     <footer>
-        <script src="{{ url_for('static', filename='admin/js/demo.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/progress_bar.js') }}"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://kit.fontawesome.com/76c7b4b38a.js" crossorigin="anonymous"></script>
+        <script src="{{ url_for('static', filename='admin/js/custom.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/base_script.js') }}"></script>
     </footer>
 </body>
 
