@@ -1,0 +1,133 @@
+*, html, body {
+    color: white;
+    overflow: unset;
+}
+
+header {
+    height: 100vh;
+}
+
+header div h2 {
+    color: inherit;
+    text-shadow: .1em 1px #333;
+}
+
+.active {
+    font-weight: 800;
+}
+
+/* Vertical Navbar Active Classes */
+#profile-link.active {
+    background-color: #007BFF;
+}
+
+#abilities-link.active {
+    background-color: #FFB175;
+}
+
+#expereinces-link.active {
+    background-color: #48C268;
+}
+
+#contact-link.active {
+    background-color: #E8A2A5;
+}
+
+/* Profile Styles */
+#about {
+    background-color: white;
+}
+
+#about p {
+    color: #1D3E63;
+}
+
+#detail {
+    background-color: #1D3E63;
+    color: white;
+}
+
+#about h2, #detail h2 {
+    color: #007BFF
+}
+
+/* Abilities Styles */
+#skills {
+    background-color: white;
+}
+
+#skills label {
+    color: #C26825;
+}
+
+#languages {
+    background-color: #C26825;
+    color: white;
+}
+
+#skills h2, #languages h2 {
+    color: #FFB175
+}
+
+/* Experiences Styles */
+#educations div .border-bottom, #careers div .border-bottom {
+    border-color: #48C268 !important;
+}
+
+#educations {
+    background-color: #2E5932;
+    color: white
+}
+
+#careers {
+    background-color: white;
+}
+
+#careers h1, #careers div p, #careers div small {
+    color: #2E5932;
+}
+
+#careers h5, #educations h5 {
+    color: #48C268;
+}
+
+/* Contact Styles */
+#contact-ways {
+    background-color: #7A3235;
+    color: white;
+}
+
+.contact-item a {
+    color: white;
+}
+
+.contact-item strong, .contact-item li {
+    opacity: 0.7
+}
+
+#contact-form {
+    color: #7A3235;
+    background-color: white;
+}
+
+input:focus, textarea:focus, input[type=submit] {
+    border: 1px solid #7A3235 !important;
+}
+
+input[type=submit]:hover {
+    background-color: white
+}
+
+input[type=submit]:focus {
+    background-color: #7A3235 !important;
+    color: white !important;
+}
+
+#contact-form form div label {
+    color: #7A3235;
+    font-size: 1.1em;
+}
+
+#contact-form h3, #contact-ways h3 {
+    color: #E8A2A5;
+}

@@ -1,0 +1,76 @@
+@font-face {
+    font-family: "Comic-Sans-MS";
+    src: url("../fonts/ComicSansMS.eot") format("eot");
+    src: url("../fonts/ComicSansMS.otf") format("otf");
+    src: url("../fonts/ComicSansMS.ttf") format("ttf");
+    src: url("../fonts/ComicSansMS.woff") format("woff");
+}
+
+html, body, * {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Comic-Sans-MS !important;
+}
+
+p {
+    white-space: pre-wrap !important;
+}
+
+/* Custom Inputs */
+input:focus, textarea:focus, input[type=submit] {
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0) inset, 0 0 0 rgba(0, 0, 0, 0) !important;
+    outline: 0 none !important;
+}
+
+/* Custom Progress Bar */
+.custom-progress-bar {
+    width: 100%;
+    height: 1em;
+    color: #333;
+}
+
+.custom-progress-bar, .progress-done {
+    border-radius: .5em;
+}
+
+.progress-done {
+    height: 100%;
+    width: 0;
+    text-align: center;
+    min-width: 1rem;
+}
+
+/* Utils */
+.overflow-hidden {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+}
+
+.bg-img {
+    background: no-repeat center center fixed;
+    background-size: cover;
+}
+
+.bg-orange {
+    background-color: #C26825 !important;
+}
+
+.bg-green {
+    background-color: #48C268 !important;
+    color: white;
+}
+
+.bg-pink {
+    background-color: #E8A2A5 !important;
+    color: white;
+}

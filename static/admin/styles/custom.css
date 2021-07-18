@@ -1,0 +1,291 @@
+/* Base Admin Template */
+@media(max-width: 991px) {
+    aside {
+        position: absolute !important;
+        height: 94.5%;
+    }
+
+    body {
+        position: relative;
+    }
+}
+
+.set-opacity {
+    position: absolute;
+    height: 100%;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background-color: rgba(0, 0, 0, .7);
+}
+
+aside {
+    position: relative;
+    min-height: 100vh;
+    display: fixed;
+    transition: width .5s cubic-bezier(.33, -0.59, .32, 1.28);
+    overflow: hidden;
+}
+
+aside {
+    z-index: 1;
+}
+
+h3 {
+    color: white;
+    position: relative;
+}
+
+#sidebar-items .list-group-item {
+    color: white;
+    position: relative;
+    z-index: 1;
+}
+
+#sidebar-items .list-group-item {
+    background-color: transparent;
+    padding-bottom: 1em;
+    padding-right: 0 !important;
+    position: static;
+}
+
+#sidebar-items a.list-group-item {
+    color: white;
+}
+
+#sidebar-items a.list-group-item:hover {
+    text-decoration: none;
+    background-color: rgb(3, 3, 3, .6);
+    font-weight: 700;
+}
+
+.dropdown-menu {
+    width: 100%;
+    box-sizing: content-box;
+}
+
+main {
+    width: 100vw;
+    min-height: 100vh;
+}
+
+#toggler-button {
+    transition: 0.2s ease
+}
+
+.custom-file-btn {
+    height: 4rem;
+    width: 4rem;
+    background-color: #871E43;
+    border: 0;
+    font-size: 1.3rem;
+    transition: font-size .2s ease;
+    background-size: contain;
+}
+
+.custom-file-btn:hover {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1) 0 0);
+    font-size: 1.6rem;
+}
+
+button:focus {
+    outline: none !important;
+}
+
+label {
+    font-size: 1.2rem;
+}
+
+td {
+    white-space: nowrap;
+}
+
+input[type=range]::-moz-range-thumb {
+    background-color: #C26825;
+    cursor: pointer;
+}
+
+input[type=range]::-moz-range-track {
+    background: #ddd !important;
+    height: 1rem;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    background: #ddd !important;
+    height: 1rem;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    height: 2rem;
+    width: 2rem;
+    background: #C26825;
+}
+
+input[type=range]::-moz-range-thumb {
+    height: 1.3rem;
+    width: 1.3rem;
+    background: #C26825;
+}
+
+input[type=range]:focus {
+    outline: none !important;
+}
+
+/* .End Base */
+/* Profile */
+#profile {
+    color: white;
+}
+
+.thumbnail-btn {
+    width: 18rem;
+    height: 18rem;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 3px solid #ddd;
+    background-color: none !important;
+}
+
+.thumbnail-btn li {
+    opacity: .85;
+    color: white;
+    transition: font-size .3s ease;
+}
+
+.thumbnail-btn:hover {
+    font-size: 1.5rem !important;
+}
+
+main #profile {
+    min-height: 100%;
+}
+
+/* .End Index */
+/* Abilities & Expereinces & Contact */
+section {
+    padding: 3rem !important;
+}
+
+section label {
+    margin-bottom: 1.5rem;
+}
+
+section {
+    background-color: white
+}
+
+#new-ability, #new-experience, #new-contact {
+    border: 1px solid #ddd;
+    border-right: 0;
+    border-left: 0;
+}
+
+section div {
+    margin-bottom: 1rem
+}
+
+section {
+    border-bottom: 1px solid #ddd;
+}
+
+/* .End Profile */
+/* Abilities */
+#ability section, #new-ability {
+    border-color: #FFB175;
+}
+
+section .custom-progress-bar .progress-done {
+    background-color: #C26825;
+}
+
+section .custom-progress-bar {
+    background-color: #ddd;
+}
+
+.ability-input:focus {
+    border-color: #C26825;
+}
+
+/* .End abilities */
+/* Experiences */
+#experiences section, #new-experience {
+    border-color: #48C268;
+}
+
+section h3 {
+    color: #48C268;
+}
+
+.experience-description {
+    max-height: 10.5rem;
+    overflow: hidden;
+}
+
+.experience-input:focus {
+    border-color: #48C268;
+}
+
+/* .End Experiences */
+/* Contact */
+.contact-input:focus {
+    border-color: #E8A2A5;
+}
+
+#new-contact, #contacts section {
+    border-color: #E8A2A5;
+}
+
+/* .End Contact */
+/* Inbox */
+#inbox .list-group-item {
+    padding-right: .5rem !important;
+    padding-left: .5rem !important;
+    line-height: .65rem;
+}
+
+#inbox .list-group-item a {
+    text-decoration: none;
+    color: #333;
+}
+
+.sent-date {
+    color: #E8A2A5;
+}
+
+#inbox small {
+    font-size: .65rem;
+}
+
+.msg-body {
+    margin-top: .5rem;
+    line-height: 1rem;
+    font-size: .8rem;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+}
+
+#inbox .list-group-item:hover {
+    border-bottom-color: #E8A2A5;
+    background-color: rgb(245, 245, 245);
+}
+
+#single-message {
+    background-color: white;
+}
+
+#single-message>* {
+    border-bottom: 1.5px solid #E8A2A5;
+}
+
+#msg-body {
+    font-size: 1.15rem;
+    min-height: 30rem;
+    max-height: 30rem;
+    overflow-y: scroll;
+}
+
+/* .End Inbox */
