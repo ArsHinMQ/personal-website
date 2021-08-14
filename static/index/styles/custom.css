@@ -1,133 +1,141 @@
-*, html, body {
-    color: white;
-    overflow: unset;
+@media (max-width: 500px) {
+    .more-or-less {
+        display: block !important;
+    }
+
+    .experience-wrapper div:last-child p {
+        max-height: 0;
+        overflow: hidden;
+    }
+}
+
+html {
+    scroll-padding: 20vh;
 }
 
 header {
     height: 100vh;
+    margin-bottom: 20vh;
 }
 
-header div h2 {
-    color: inherit;
-    text-shadow: .1em 1px #333;
+header a {
+    font-size: 3rem;
+    width: 5rem;
+    text-align: center;
+    border-top: 3px solid var(--primary);
 }
 
-.active {
-    font-weight: 800;
+header a li {
+    transition: transform 1.5s ease;
+    animation-name: upAndDown;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
 }
 
-/* Vertical Navbar Active Classes */
-#profile-link.active {
-    background-color: #007BFF;
+@keyframes upAndDown {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(20px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
 }
 
-#abilities-link.active {
-    background-color: #FFB175;
+main {
+    width: 95%;
+    min-height: 100vh;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 15px 50px;
+    position: relative;
 }
 
-#expereinces-link.active {
-    background-color: #48C268;
+.thumbnail-img {
+    border: 5px solid var(--light);
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 225px;
+    height: 225px;
 }
 
-#contact-link.active {
-    background-color: #E8A2A5;
+#wrapper {
+    margin-top: 150px;
 }
 
-/* Profile Styles */
-#about {
-    background-color: white;
+h2 {
+    border-bottom: 5px solid var(--secondary);
+    width: 5rem;
 }
 
-#about p {
-    color: #1D3E63;
+strong {
+    margin-top: 1rem;
+    display: inline-block;
 }
 
-#detail {
-    background-color: #1D3E63;
-    color: white;
+strong li {
+    color: var(--secondary);
+    font-size: 1.3rem !important;
 }
 
-#about h2, #detail h2 {
-    color: #007BFF
+.custom-progress-bar {
+    transition: width .3s ease;
 }
 
-/* Abilities Styles */
-#skills {
-    background-color: white;
+.progress-wrapper:hover .custom-progress-bar {
+    width: 102%;
 }
 
-#skills label {
-    color: #C26825;
+.progress-done span {
+    transition: padding .5s ease;
+    transition-property: padding, bottom;
 }
 
-#languages {
-    background-color: #C26825;
-    color: white;
+.progress-wrapper:hover .custom-progress-bar .progress-done span {
+    padding: 5px;
+    bottom: -25px;
 }
 
-#skills h2, #languages h2 {
-    color: #FFB175
+.experience-wrapper {
+    margin: 3rem 0;
 }
 
-/* Experiences Styles */
-#educations div .border-bottom, #careers div .border-bottom {
-    border-color: #48C268 !important;
+.experience-wrapper div:last-child p {
+    height: initial;
+    transition: max-height .5s ease;
 }
 
-#educations {
-    background-color: #2E5932;
-    color: white
+.more-or-less {
+    position: relative;
+    width: 100%;
+    text-align: right;
+    color: var(--secondary) !important;
+    border-top: 2px solid var(--secondary) !important;
+    font-size: 1.5rem;
+    padding: 0 5px;
+    display: none;
 }
 
-#careers {
-    background-color: white;
+
+.location {
+    color: var(--secondary);
 }
 
-#careers h1, #careers div p, #careers div small {
-    color: #2E5932;
+.logo {
+    position: relative;
+    width: 35px;
+    height: 35px;
+    border-radius: 25px;
+    margin: 0 5px;
 }
 
-#careers h5, #educations h5 {
-    color: #48C268;
-}
-
-/* Contact Styles */
-#contact-ways {
-    background-color: #7A3235;
-    color: white;
-}
-
-.contact-item a {
-    color: white;
-}
-
-.contact-item strong, .contact-item li {
-    opacity: 0.7
-}
-
-#contact-form {
-    color: #7A3235;
-    background-color: white;
-}
-
-input:focus, textarea:focus, input[type=submit] {
-    border: 1px solid #7A3235 !important;
-}
-
-input[type=submit]:hover {
-    background-color: white
-}
-
-input[type=submit]:focus {
-    background-color: #7A3235 !important;
-    color: white !important;
-}
-
-#contact-form form div label {
-    color: #7A3235;
-    font-size: 1.1em;
-}
-
-#contact-form h3, #contact-ways h3 {
-    color: #E8A2A5;
+#contact-info a {
+    display: block;
+    margin: 1rem 0;
 }

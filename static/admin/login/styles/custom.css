@@ -1,17 +1,12 @@
-.container-fluid .row > div {
-    height: 100vh;
+@media (max-width: 800px) {
+    main {
+        width: 350px !important;
+    }
 }
 
-.set-opacity {
-    position: absolute;
-    height: 100%;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-    left: 0px;
-    background-color: rgba(0, 0, 0, .7);
-}
-
-.set-opacity div {
-    z-index: 1;
+main {
+    width: 450px;
+    height: 350px;
+    padding: 2rem;
+    border-radius: 15px;
 }
