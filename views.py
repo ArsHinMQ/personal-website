@@ -8,8 +8,17 @@ from forms import SendEmailForm
 def index():
     form = SendEmailForm(request.form)
     profile = Admin.query.first()
+    # Divide abilities to two column
     skills = Ability.query.filter(Ability.kind == "skill").all()
+    skills = [
+        skills[:int(len(skills) / 2)],
+        skills[int(len(skills) / 2):]
+    ]
     langs = Ability.query.filter(Ability.kind == "lang").all()
+    langs = [
+        langs[:int(len(langs) / 2)],
+        langs[int(len(langs) / 2):]
+    ]
     educations = Experience.query.filter(Experience.kind == "education").all()
     careers = Experience.query.filter(Experience.kind == "career").all()
     contacts = Contact.query.all()
