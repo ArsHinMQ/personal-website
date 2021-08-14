@@ -10,11 +10,12 @@ class Admin(db.Model):
     id = Column(Integer, primary_key=True)
     fullname = Column(String(30), nullable=False)
     password = Column(String(128), nullable=False)
-    age = Column(Integer, nullable=True)
-    location = Column(String(60), nullable=True)
-    about = Column(Text, nullable=True)
-    thumbnail = Column(String(256), nullable=True)
-    bg = Column(String(256), nullable=True)
+    age = Column(Integer, nullable=False)
+    birth = Column(DateTime, nullable=False)
+    location = Column(String(60), nullable=False)
+    about = Column(Text, nullable=False)
+    thumbnail = Column(String(256), nullable=True, default='thumbnail-img.jpg')
+    bg = Column(String(256), nullable=True, default='background-img.jpg')
 
     def __init__(self, **kw):
         for key, value in kw.items():
@@ -22,13 +23,12 @@ class Admin(db.Model):
 
     @validates("password")
     def set_password(self, key, value):
-        if len(value) < 6:
+        if len(value) < 4:
             raise ValueError("Short Password")
         return generate_password_hash(value)
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
-
 
 
 class Ability(db.Model):
@@ -43,19 +43,18 @@ class Ability(db.Model):
         self.scale = scale
         self.kind = kind
 
-
     @validates("scale")
     def set_scale(self, key, value):
         try:
-            value=int(value)
+            value = int(value)
         except ValueError:
             raise ValueError("Scale can't be character")
         if value > 100:
             raise ValueError("Scale can't be over than 100")
         elif value <= 0:
-            raise ValueError("Invalid scale, did you enter 0 or a negative number as scale?")
+            raise ValueError(
+                "Invalid scale, did you enter 0 or a negative number as scale?")
         return value
-
 
 
 class Experience(db.Model):
@@ -65,10 +64,11 @@ class Experience(db.Model):
     start_date = Column(String(20), nullable=False, unique=False)
     finish_date = Column(String(20), nullable=False, unique=False)
     location = Column(String(60), nullable=False, unique=False)
-    description = Column(Text(), nullable=True, unique=False)
+    description = Column(Text(), nullable=False, unique=False)
     kind = Column(String(10), nullable=False, unique=False)
 
-    def __init__(self, title, start_date, finish_date, location, kind, description=None):
+    def __init__(self, title, start_date, finish_date, location, kind,
+                 description=None):
         self.title = title
         self.start_date = start_date
         self.finish_date = finish_date
@@ -77,19 +77,17 @@ class Experience(db.Model):
         self.kind = kind
 
 
-
 class Contact(db.Model):
     __tablename__ = 'contacts'
     id = Column(Integer, primary_key=True)
     name = Column(String(128), nullable=False, unique=True)
     address = Column(String(128), nullable=False, unique=True)
-    logo = Column(String(256), nullable=True)
+    logo = Column(String(256), nullable=False)
 
     def __init__(self, name, address, logo=None):
         self.name = name
         self.address = address
         self.logo = logo
-
 
 
 class Message(db.Model):
