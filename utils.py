@@ -1,11 +1,8 @@
 from functools import wraps
-from re import I
 from flask import session, redirect, url_for
-from werkzeug.utils import secure_filename
-from app import db
 from models import Admin
 
-import uuid
+import datetime
 
 
 def admin_only(func):
@@ -21,7 +18,8 @@ def check_image(filename, allowed_formats={"png", "jpg", "eps", "jpeg", "svg"}):
     file_format = filename.split('.')[-1].lower()
     for f in allowed_formats:
         if file_format == f:
-            return f"{uuid.uuid4().hex}.{f}"
+            fn = datetime.datetime.now().strftime("%y%m%d_%H%M%S")
+            return f"{fn}.{f}"
     raise ValueError("Not a valid format for image file.")
 
 
