@@ -1,7 +1,11 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, IntegerField, TextAreaField, FileField, validators
+from wtforms import (StringField, PasswordField, IntegerField, TextAreaField,
+                     FileField)
 from wtforms.validators import DataRequired
-from wtforms.widgets.html5 import NumberInput, RangeInput, EmailInput
+from wtforms.widgets.html5 import (NumberInput, RangeInput, EmailInput,
+                                   DateInput)
+from wtforms.fields import DateField
+
 
 class LoginForm(FlaskForm):
     password = PasswordField(validators=[DataRequired()])
@@ -17,14 +21,17 @@ class ProfileForm(FlaskForm):
     thumbnail = FileField()
     fullname = StringField(validators=[DataRequired()])
     bg = FileField()
-    age = IntegerField(widget=NumberInput(min=1, max=100))
-    location = StringField()
-    about = TextAreaField()
+    age = IntegerField(widget=NumberInput(min=1, max=100),
+                       validators=[DataRequired()])
+    birth = DateField(widget=DateInput(), validators=[DataRequired()])
+    location = StringField(validators=[DataRequired()])
+    about = TextAreaField(validators=[DataRequired()])
 
 
 class AbilityForm(FlaskForm):
     name = StringField(validators=[DataRequired()])
-    scale = IntegerField(widget=NumberInput(min=0, max=100))
+    scale = IntegerField(widget=NumberInput(min=0, max=100),
+                         validators=[DataRequired()])
     progress = IntegerField(widget=RangeInput(step=5))
 
 
@@ -33,7 +40,7 @@ class ExperienceForm(FlaskForm):
     start_date = StringField(validators=[DataRequired()])
     finish_date = StringField(validators=[DataRequired()])
     location = StringField(validators=[DataRequired()])
-    description = TextAreaField()
+    description = TextAreaField(validators=[DataRequired()])
 
 
 class ContactForm(FlaskForm):
@@ -43,7 +50,7 @@ class ContactForm(FlaskForm):
 
 
 class SendEmailForm(FlaskForm):
-    sender_email = StringField(validators=[DataRequired()], widget=EmailInput())
-    subject = StringField()
+    sender_email = StringField(
+        validators=[DataRequired()], widget=EmailInput())
+    subject = StringField(validators=[DataRequired()])
     msg = TextAreaField(validators=[DataRequired()])
-
