@@ -1,15 +1,17 @@
-from flask import render_template, redirect, url_for, session, request, flash, abort
+from flask import (render_template, redirect, url_for, session, request, flash,
+                   abort)
 import os
 
 from . import admin
 from app import db
 from utils import admin_only, check_image, and_profile
 from models import Ability, Experience, Contact, Message
-from forms import LoginForm, ProfileForm, AbilityForm, ExperienceForm, ChangePasswordForm, ContactForm
+from forms import (LoginForm, ProfileForm, AbilityForm, ExperienceForm,
+                   ChangePasswordForm, ContactForm)
 from sqlalchemy.exc import IntegrityError
 
 
-# ------------------------------------ START ------------------------------------ #
+# ------------------ START ------------------ #
 @admin.route('/login', methods=["GET", "POST"])
 @and_profile
 def login(profile):
@@ -20,17 +22,20 @@ def login(profile):
 
         if not profile.check_password(form.password.data):
             flash("Incorrect Password", "danger")
-            return render_template("admin/login/login.html", form=form, profile=profile)
+            return render_template("admin/login/login.html",
+                                   form=form,
+                                   profile=profile)
 
         session['fullname'] = profile.fullname
         return redirect(url_for("admin.set_profile"))
     if session.get("fullname"):
-        flash("You already logged in", 'safe')
+        flash("You already logged in", 'info')
         return redirect(url_for("admin.set_profile"))
-    return render_template("admin/login/login.html", form=form, profile=profile)
+    return render_template("admin/login/login.html", form=form,
+                           profile=profile)
 
 
-# ------------------------------------ PROFILE ------------------------------------ #
+# ------------------ PROFILE ------------------ #
 @admin.route('/', methods=['GET', 'POST'])
 @admin.route('/profile', methods=['GET', 'POST'])
 @and_profile
@@ -55,10 +60,11 @@ def set_profile(profile):
                 os.remove(os.path.join("static/images/bg" + profile.bg))
             afile.save(os.path.join('static/images/bg', filename))
             profile.bg = filename
-        profile.fullname = form.fullname.data if form.fullname.data else profile.fullname
-        profile.location = form.location.data if form.location.data else None
-        profile.age = form.age.data if form.age.data else None
-        profile.about = form.about.data if form.about.data else None
+        profile.fullname = form.fullname.data
+        profile.location = form.location.data
+        profile.birth = form.birth.data
+        profile.age = form.age.data
+        profile.about = form.about.data
         db.session.commit()
         flash("Profile modified", "success")
         return redirect(url_for('admin.set_profile'))
@@ -76,12 +82,12 @@ def change_password(profile):
         if not form.validate_on_submit:
             abort(400)
         if not profile.check_password(form.old_password.data):
-            flash(
-                "Wrong password, please input your current password in the first field", "danger")
+            flash("""Wrong password, please input your current password in the
+                    firstfield""", "danger")
             return redirect(url_for('admin.change_password'))
         if form.new_password.data != form.config_password.data:
-            flash(
-                "New password and configure password were not match, try again", "warning")
+            flash("""New password and configure password were not match, try
+                    again""", "warning")
             return redirect(url_for('admin.change_password'))
         try:
             profile.password = form.new_password.data
@@ -90,7 +96,9 @@ def change_password(profile):
             return redirect(url_for('admin.change_password'))
         except ValueError as e:
             flash(str(e), "warning")
-    return render_template("admin/change_password.html", form=form, profile=profile)
+    return render_template("admin/change_password.html",
+                           form=form,
+                           profile=profile)
 
 
 @admin.route('/profile/delete/img/thumbnail')
@@ -121,8 +129,8 @@ def delete_background(profile):
     return redirect(url_for('admin.set_profile'))
 
 
-# ------------------------------------ RESUME ------------------------------------ #
-# ```````````````````````````````````` Abilities `````````````````````````````````` #
+# ------------------ RESUME ------------------ #
+# ------------------ Abilities ----------------#
 @admin.route('/resume/skills', methods=['GET'])
 @and_profile
 @admin_only
@@ -130,7 +138,12 @@ def skills(profile):
     form = AbilityForm(request.form)
     skills = reversed(Ability.query.filter(
         Ability.kind == 'skill').order_by(Ability.id).all())
-    return render_template('admin/abilities.html', form=form, abilities=skills, kind='skill', profile=profile)
+    return render_template('admin/abilities.html',
+                           form=form,
+                           abilities=skills,
+                           kind='skill',
+                           profile=profile
+                           )
 
 
 @admin.route('/resume/languages', methods=['GET'])
@@ -140,13 +153,16 @@ def languages(profile):
     form = AbilityForm(request.form)
     langs = reversed(Ability.query.filter(
         Ability.kind == 'lang').order_by(Ability.id).all())
-    return render_template('admin/abilities.html', form=form, abilities=langs, kind='language', profile=profile)
+    return render_template('admin/abilities.html', form=form, abilities=langs,
+                           kind='language',
+                           profile=profile
+                           )
 
 
 @admin.route('/resume/abilities/<string:kind>/new', methods=['POST'])
 @admin_only
 def new_ability(kind):
-    if not kind in ['language', 'skill']:
+    if kind not in ['language', 'skill']:
         abort(404)
 
     private_page = f"admin.{kind}s"
@@ -162,13 +178,13 @@ def new_ability(kind):
         )
         db.session.add(new_ability)
         db.session.commit()
-        flash("New abillity added successfully!", 'success')
+        flash(f"New {kind} added successfully!", 'success')
         return redirect(url_for(private_page))
     except ValueError as e:
         flash(str(e), 'warning')
     except IntegrityError:
         db.session.rollback()
-        flash("This ability is allready exist", 'danger')
+        flash(f"This {kind} is allready exist", 'danger')
     return redirect(url_for(private_page))
 
 
@@ -181,11 +197,11 @@ def delete_ability(id):
     private_page = "admin.skills" if ability.kind == 'skill' else 'admin.languages'
     db.session.delete(ability)
     db.session.commit()
-    flash("Ability deleted", "success")
+    flash(f"{ability.kind} deleted", "success")
     return redirect(url_for(private_page))
 
 
-# ```````````````````````````````````` Experiences `````````````````````````````````` #
+# ------------------ Experiences ----------------`` #
 @admin.route('/resume/educations', methods=['GET'])
 @and_profile
 @admin_only
@@ -208,18 +224,19 @@ def careers(profile):
     form = ExperienceForm(request.form)
     careers = reversed(Experience.query.filter(
         Experience.kind == "career").order_by(Experience.id).all())
+
     return render_template("admin/experiences.html",
                            experiences=careers,
                            form=form,
                            kind="career",
-                           profile=profile
+                           profile=profile,
                            )
 
 
 @admin.route('/resume/experiences/<string:kind>/new/', methods=['POST'])
 @admin_only
 def new_experience(kind):
-    if not kind in ("career", "education"):
+    if kind not in ("career", "education"):
         abort(404)
     private_page = f"admin.{kind.lower()}s"
     form = ExperienceForm(request.form)
@@ -235,7 +252,7 @@ def new_experience(kind):
                                 )
     db.session.add(new_experience)
     db.session.commit()
-    flash("New abillity added successfully!", "success")
+    flash(f"New {kind} added successfully!", "success")
     return redirect(url_for(private_page))
 
 
@@ -284,11 +301,11 @@ def delete_experience(id):
     return redirect(url_for(private_page))
 
 
-# ------------------------------------ CONTACTS ------------------------------------ #
+# ------------------ CONTACTS ------------------ #
 @admin.route('/contacts', methods=['GET', 'POST'])
 @and_profile
 @admin_only
-def contacts(profile):
+def contact_info(profile):
     contacts = reversed(Contact.query.all())
     form = ContactForm()
     if request.method == 'POST':
@@ -308,12 +325,15 @@ def contacts(profile):
             db.session.commit()
 
             flash("New contact address added!", "success")
-            return redirect(url_for('admin.contacts'))
+            return redirect(url_for('admin.contact_info'))
         except IntegrityError:
             db.session.rollback()
             flash("Duplicated contact", "danger")
 
-    return render_template('admin/contacts.html', contacts=contacts, form=form, profile=profile)
+    return render_template('admin/contact_info.html',
+                           contacts=contacts,
+                           form=form, profile=profile
+                           )
 
 
 @admin.route('contacts/<int:id>/delete', methods=['GET'])
@@ -322,34 +342,42 @@ def delete_contact(id):
     contact = Contact.query.filter(Contact.id == id).first()
     if not contact:
         abort(404)
+
+    os.remove(os.path.join("static/images/logo/" + contact.logo))
     db.session.delete(contact)
     db.session.commit()
     flash('Contact address deleted successfully!', 'success')
-    return redirect(url_for('admin.contacts'))
+    return redirect(url_for('admin.contact_info'))
 
 
 @admin.route('/contact/inbox')
 @and_profile
 @admin_only
-def messages(profile):
+def inbox(profile):
     messages = reversed(Message.query.order_by(Message.postage_date).all())
-    return render_template('admin/inbox.html', messages=messages, profile=profile)
+    return render_template('admin/inbox.html',
+                           messages=messages,
+                           profile=profile
+                           )
 
 
-@admin.route('contact/messages/<int:id>')
+@admin.route('contact/inbox/<int:id>')
 @and_profile
 @admin_only
-def single_message(profile, id):
+def read_mail(profile, id):
     message = Message.query.filter(Message.id == id).first()
     if not message:
         abort(404)
 
-    return render_template('admin/single_message.html', message=message, profile=profile)
+    return render_template('admin/single_message.html',
+                           message=message,
+                           profile=profile
+                           )
 
 
-@admin.route('/contact/messages/<int:id>/delete', methods=['GET'])
+@admin.route('/contact/inbox/<int:id>/delete', methods=['GET'])
 @admin_only
-def delete_message(id):
+def delete_mail(id):
     message = Message.query.filter(Message.id == id).first()
     if not message:
         abort(404)
@@ -357,10 +385,10 @@ def delete_message(id):
     db.session.delete(message)
     db.session.commit()
     flash("Message deleted!", "success")
-    return redirect(url_for('admin.messages'))
+    return redirect(url_for('admin.inbox'))
 
 
-# ------------------------------------ THE END ------------------------------------ #
+# ------------------ THE END ------------------ #
 @admin.route('/logout')
 @admin_only
 def logout():
