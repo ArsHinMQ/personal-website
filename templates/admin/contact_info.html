@@ -1,0 +1,64 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Contact Info{% endblock %}
+
+{% block content %}
+<ul class="list-group list-group-flush">
+    <button id='form-toggler' class="btn btn-primary collapsed" data-toggle='collapse' data-target='.collapseable-form'>
+        <li class="fa fa-plus"></li>
+    </button>
+    <hr>
+    <li class="list-group-item collapseable-form collapse">
+        <form action="{{ url_for('admin.contact_info') }}" class="container-fluid" method="POST" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <div class="row px-1 my-4">
+                <div class="col-2">
+                    {{ form.logo(class='d-none') }}
+                    <button class="custom-file-btn rounded-circle mt-2 file-btn" data-change=true type="button" data-target='tooltip' title='Logo'>
+                        <span class="fa fa-picture-o"></span>
+                    </button>
+                </div>
+                <div class="col-10 pl-md-0 pl-4 mt-2">
+                    <div class="input-group">
+                        {{ form.name(id='name', class='form-control') }}
+                        <span>Media Name</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row px-1 my-4">
+                <div class="col-12">
+                    <div class="input-group">
+                        {{ form.address(id='address', class='form-control') }}
+                        <span>Address</span>
+                    </div>
+                </div>
+            </div>
+            <div class="text-right my-3 px-1">
+                <input type="submit" value="ADD" class="btn btn-primary">
+            </div>
+        </form>
+    </li>
+    {% for contact in contacts %}
+    <li class="list-group-item container-fluid">
+        <div class="row">
+            <div class="col-11">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-1">
+                            <img src="{{ url_for('static', filename='images/logo/' + contact.logo) }}" class="rounded-circle logo" alt="{{ contact.name }}">
+                        </div>
+                        <div class="col-10 pl-5">
+                            <h5>{{ contact.name }}</h5>
+                            <a href="https://{{ contact.address }}">{{ contact.address }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1">
+                <a href="{{ url_for('admin.delete_contact', id=contact.id) }}" class="float-right text-danger list-actions"><span class="fa fa-remove" data-target='tooltip' title='remove'></span></a>
+            </div>
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

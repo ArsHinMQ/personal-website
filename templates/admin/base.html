@@ -9,84 +9,106 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='admin/styles/custom.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/base_style.css') }}">
-    <title>Admin | {% block title %}{% endblock %}</title>
+    <title>Admin | {% block title %}{% endblock %} </title>
 </head>
 
 <body>
-    <header>
-        <nav class="navbar navbar-light bg-light border-bottom navbar-expand-sm">
-            <a id="toggler-button" href="#" class="navbar-brand">
-            </a>
-            <button type="button" name="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="nav-item"><a href="{{ url_for('admin.set_profile') }}" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="{{ url_for('index') }}" class="nav-link">View</a></li>
-                    <li class="nav-item"><a href="{{ url_for('admin.logout') }}" class="nav-link">Logout</a></li>
+    <aside id='main-sidebar' class="bg-img d-flex flex-column" style="background: linear-gradient(to right ,rgba(38, 38, 38, 0.95), rgb(0, 204, 153, .95)), url({{ url_for('static', filename='images/bg/' + profile.bg) }});">
+        <header class="text-center mt-3 mb-4">
+            <h3 class="icon">{{ profile.fullname[0] }}</h3><h3>{{ profile.fullname[1:] }}</h3>
+        </header>
+        <ul id='navigation-items' class="nav nav-pills flex-column">
+            <li class="nav-item" id='profile'>
+                <a href="{{ url_for('admin.set_profile') }}" class="nav-link">
+                    <span class="fa fa-user"></span>
+                    <span>Profile</span>
+                </a>
+            </li>
+            <li class="nav-item" id='skills'>
+                <a href="{{ url_for('admin.skills') }}" class="nav-link">
+                    <span class="fa fa-check"></span>
+                    <span>Skills</span>
+                </a>
+            </li>
+            <li class="nav-item" id='languages'>
+                <a href="{{ url_for('admin.languages') }}" class="nav-link">
+                    <span class="fa fa-language"></span>
+                    <span>Languages</span>
+                </a>
+            </li>
+            <li class="nav-item" id='educations'>
+                <a href="{{ url_for('admin.educations') }}" class="nav-link">
+                    <span class="fa fa-book"></span>
+                    <span>Educations</span>
+                </a>
+            </li>
+            <li class="nav-item" id='careers'>
+                <a href="{{ url_for('admin.careers') }}" class="nav-link">
+                    <span class="fa fa-coffee"></span>
+                    <span>Careers</span>
+                </a>
+            </li>
+            <li class="nav-item" id='inbox'>
+                <a href="{{ url_for('admin.inbox') }}" class="nav-link">
+                    <span class="fa fa-envelope"></span>
+                    <span>Inbox</span>
+                </a>
+            </li>
+            <li class="nav-item" id='contacts'>
+                <a href="{{ url_for('admin.contact_info') }}" class="nav-link">
+                    <span class="fa fa-phone"></span>
+                    <span>Contact Info</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+    <div id="sidebar-overlay"></div>
+    <main>
+        <header id='main-header'>
+            <nav class="navbar navbar-expand navbar-light bg-light navbar-collapse">
+                <button id='toggle-btn' href="#" class="nav-link btn btn-link" role="button">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <a href="#" class="navbar-brand">Admin Panel</a>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a href="{{ url_for('admin.inbox') }}" class="nav-link text-secondary" data-target='tooltip' title='Inbox'>
+                            <span class="fa fa-comments-o"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url_for('admin.logout') }}" class="nav-link text-danger" data-target='tooltip' title='Logout'>
+                            <span class="fa fa-sign-out"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
+                            <span class="fa fa-ellipsis-v"></span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right mr-3" aria-labelledby="navbarDropdown">
+                            <a href="{{ url_for('index') }}" class="dropdown-item">View</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for('admin.inbox') }}" class="dropdown-item">Inbox</a>
+                            <a href="{{ url_for('admin.change_password') }}" class="dropdown-item">Password</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for('admin.logout') }}" class="dropdown-item text-danger">Logout</a>
+                        </div>
+                    </li>
                 </ul>
-            </div>
-        </nav>
-    </header>
-    <div class="d-flex">
-        <aside class="bg-dark bg-img" style="background-image: url({{ url_for('static', filename='images/bg/' + profile.bg) }});">
-            <div class="set-opacity">
-
-                <div id="sidebar-head" class="pt-3 text-center text-white">
-                    <h3 class="border-bottom pb-3 mb-0">Admin Panel</h3>
-                </div>
-                <div id="sidebar-items" class="list-group">
-                    <a href="{{ url_for('admin.set_profile') }}" class="list-group-item">
-                        <li class="fa fa-user pr-1 pl-0"></li>
-                        Profile
-                    </a>
-                    <a href="{{ url_for('admin.change_password') }}" class="list-group-item">
-                        <li class="fa fa-lock pr-1 pl-0"></li>
-                        Password
-                    </a>
-                    <a href="{{ url_for('admin.skills') }}" class="list-group-item">
-                        <li class="fa fa-check pr-1 pl-0"></li>
-                        Skills
-                    </a>
-                    <a href="{{ url_for('admin.languages') }}" class="list-group-item">
-                        <li class="fa fa-language"></li>
-                        Languages
-                    </a>
-                    <a href="{{ url_for('admin.educations') }}" class="list-group-item">
-                        <li class="fa fa-pencil"></li>
-                        Educations
-                    </a>
-                    <a href="{{ url_for('admin.careers') }}" class="list-group-item">
-                        <li class="fa fa-coffee"></li>
-                        Careers
-                    </a>
-                    <a href="{{ url_for('admin.contacts') }}" class="list-group-item">
-                        <li class="fa fa-paper-plane"></li>
-                        Contact
-                    </a>
-                    <a href="{{ url_for('admin.messages') }}" class="list-group-item">
-                        <li class="fa fa-envelope"></li>
-                        Inbox
-                    </a>
-                </div>
-            </div>
-        </aside>
-        <main class="bg-light">
-            {% include 'partials/flash.html' %}
-            {% block content %}
-            {% endblock %}
-        </main>
-    </div>
-
+            </nav>
+        </header>
+        <div class="content">
+            {% block content %}{% endblock %}
+        </div>
+        {% include 'partials/flash.html' %}
+    </main>
 
     <footer>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="https://kit.fontawesome.com/76c7b4b38a.js" crossorigin="anonymous"></script>
-        <script src="{{ url_for('static', filename='admin/js/custom.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/base_script.js') }}"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+        <script src='{{ url_for("static", filename="admin/js/script.js") }}'></script>
+        <script src='{{ url_for("static", filename="js/base_script.js") }}'></script>
     </footer>
 </body>
 

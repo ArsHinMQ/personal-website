@@ -3,48 +3,66 @@
 {% block title %}Profile{% endblock %}
 
 {% block content %}
-<div id="profile" class="container-fluid bg-img text-right" style="background-image: url({{ url_for('static', filename='images/bg/' + profile.bg) }})">
-    <form action="#" method="post" enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
-        <div class="form-group dropdown container">
-            <button class="custom-file-btn rounded-circle mt-2 text-light" data-toggle="dropdown" type="button">
-                <li class="fa fa-picture-o"></li>
+<form action="{{ url_for('admin.set_profile') }}" method="POST" enctype="multipart/form-data" class="mx-2">
+    {{ form.hidden_tag() }}
+    <div class="form-group dropdown d-flex justify-content-end mx-3 my-2">
+        <button class="custom-file-btn rounded-circle mt-2" data-toggle="dropdown" type="button" data-target='tooltip' title='Background picture'>
+            <li class="fa fa-picture-o"></li>
+        </button>
+        <div class="dropdown-menu col-xl-4 col-md-5 col-sm-12">
+            {{ form.bg(class='d-none') }}
+            <button class="dropdown-item file-btn" type="button" data-change=true data-changethis='aside'>Change background picture</button>
+            <a class="dropdown-item" href="{{ url_for('admin.delete_background') }}">Set background picture to default</a>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center text-center">
+        <div class="my-3 d-block">
+            {{ form.thumbnail(class='d-none') }}
+            <button id='thumbnail-btn' type="button" class="file-btn rounded-circle d-block mb-2" data-change=true data-toggle="tooltip" title="Change thumbnail picture"
+                style="background-image: url({{ url_for('static', filename='images/thumbnail/' + profile.thumbnail) }});">
+                <li class="fa fa-camera fa-4x"></li>
             </button>
-            <div class="dropdown-menu col-xl-4 col-md-5 col-sm-12">
-                {{ form.bg(class="d-none") }}
-                <a class="dropdown-item" href="#" onclick="clickRealBtn(this, true,'profile')">Change background picture</a>
-                <a class="dropdown-item" href="{{ url_for('admin.delete_background') }}">Set background picture as default</a>
+            <a href="{{ url_for('admin.delete_thumbnail') }}">Set thumbnail picture to default</a>
+        </div>
+    </div>
+    <div class="form-row px-md-5">
+        <div class="col-xl-4 col-md-7 mt-3">
+            <div class="input-group">
+                {{ form.fullname(id='fullname', class='form-control') }}
+                <span>Fullname</span>
             </div>
         </div>
-        <div class="container py-3 text-md-center text-white">
-            <div class="col-md-7 col-sm-12 m-auto">
-                <div class="form-group my-3">
-                    {{ form.thumbnail(class="d-none") }}
-                    <button type="button" class="thumbnail-btn rounded-circle m-auto d-block" data-toggle="tooltip" title="Change thumbnail picture" style="background-image: url({{ url_for('static', filename='images/thumbnail/' + profile.thumbnail) }});"
-                        onclick="clickRealBtn(this, true)">
-                        <li class="fa fa-camera fa-4x"></li>
-                    </button>
-                    <a href="{{ url_for('admin.delete_thumbnail') }}">Set thumbnail picture as default</a>
-                </div>
-                <div class="form-group my-3">
-                    <label for="fullname">Fullname:</label>
-                    {{ form.fullname(id="fullname", class="form-control", placeholder="Fullname...") }}
-                </div>
-                <div class="form-group my-3">
-                    <label for="age">Age:</label>
-                    {{ form.age(id="age", class="form-control", placeholder="Age...") }}
-                </div>
-                <div class="form-group my-3">
-                    <label for="location">Location:</label>
-                    {{ form.location(id="location", class="form-control", placeholder="Location...") }}
-                </div>
-                <div class="form-group my-3">
-                    <label for="about">About:</label>
-                    {{ form.about(rows="8", class="form-control", placeholder="About you...") }}
-                </div>
-                <input type="submit" class="btn btn-primary" value="Apply Changes" style="width: 100%">
+        <div class="col-xl-2 col-md-5 mt-3">
+            <div class="input-group">
+                {{ form.age(id='age', class='form-control', placeholder=' ') }}
+                <span>Age</span>
             </div>
         </div>
-    </form>
-</div>
+        <div class="col-xl-6 col-md-12 mt-3">
+            <div class="input-group">
+                {{ form.birth(id="birth", class="form-control") }}
+                <span>Birth</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-row px-md-5 mt-3">
+        <div class="col-12">
+            <div class="input-group">
+                {{ form.location(id='location', class='form-control') }}
+                <span>Location</span>
+            </div>
+        </div>
+    </div>
+    <div class="form-row px-md-5 my-4">
+        <div class="col-12">
+            <div class="input-group">
+                {{ form.about(id='about', class="form-control", rows="10") }}
+                <span>About You</span>
+            </div>
+        </div>
+    </div>
+    <div class="float-right px-md-5 mb-5">
+        <input type="submit" value="SUBMIT" class="btn btn-primary">
+    </div>
+</form>
 {% endblock %}

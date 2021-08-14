@@ -1,70 +1,78 @@
 {% extends 'admin/base.html' %}
 
-{% block title %}{{ kind.title() + "s" }}{% endblock %}
+{% block title %}{{ kind.title() + 's' }}{% endblock %}
 
 {% block content %}
-<div class="conatienr-fluid my-3 ">
-    <div class="col-md-7 m-auto">
-        <div class="input-group">
-            <input type="search" name="experience" id="searchField" class="form-control experience-input" placeholder="Search for.." onkeyup="filter(this)">
-            <div class="input-group-append">
-                <span class="bg-green input-group-text text-light">
-                    <li class="fa fa-search"></li>
-                </span>
-            </div>
-        </div>
-    </div>
-</div>
-<section id="new-experience" class="container-fluid">
-    <form id="experience-form" action="{{ url_for('admin.new_experience', kind=kind) }}" method="POST">
-        {{ form.hidden_tag() }}
-        <div class="form-row my-2">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="title">Title</label>
-                    {{ form.title(id="title", placeholder="Title...", class="form-control experience-input") }}
-                </div>
-                <div class="form-group">
-                    <label for="start-date">Start Date</label>
-                    {{ form.start_date(id="start-date", placeholder="Start date...", class="form-control experience-input") }}
-                </div>
-                <div class="form-group">
-                    <label for="finish-date">Finish Date</label>
-                    {{ form.finish_date(id="finish-date", placeholder="Finish date...", class="form-control experience-input") }}
-                </div>
-                <div class="form-group">
-                    <label for="location">Location</label>
-                    {{ form.location(id="location", placeholder="Location...", class="form-control experience-input") }}
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    {{ form.description(id="description", class="form-control experience-input", rows="14", placeholder="Description...") }}
-                </div>
-            </div>
-        </div>
-        <input type="submit" class="btn bg-green text-white float-right" value="Add">
-    </form>
-</section>
-<div id="experiences" class="content">
-    {% for experience in experiences %}
-    <section id="{{ experience.title.replace(' ','') }}" class="container-fluid">
-        <div class="row">
-            <div class="col-xl-4 col-md-12">
-                <h3>{{ experience.title }}</h3>
-                <small class="d-block">{{ experience.location }}</small>
-                <small>{{ experience.start_date }} - {{ experience.finish_date }}</small>
-            </div>
-            <div class="col-xl-8 col-md-12 experience-description overflow-hidden">
-                {{ experience.description }}
-            </div>
-        </div>
-        <div class="float-right">
-            <a href="{{ url_for('admin.edit_experience', id=experience.id) }}" class="btn btn-warning">Edit</a>
-            <a href="{{ url_for('admin.delete_experience', id=experience.id) }}" class="btn btn-danger">Delete</a>
-        </div>
-    </section>
-    {% endfor %}
-</div>
+<ul id='experiences' class="list-group list-group-flush">
+                <button id='form-toggler' class="btn btn-primary collapsed" data-toggle='collapse' data-target='.collapseable-form'>
+                    <li class="fa fa-plus"></li>
+                </button>
+                <hr>
+                <li class="list-group-item collapseable-form collapse">
+                    <form id='new-experience' action="{{ url_for('admin.new_experience', kind=kind) }}" class="container-fluid" method='POST'>
+                        <div class="row px-1 my-4">
+                            <div class="col-12">
+                                <div class="input-group">
+                                    {{ form.title(id="title", class="form-control") }}
+                                    <span>Title</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row px-1 my-4">
+                            <div class="col-6">
+                                <div class="input-group">
+                                    {{ form.start_date(id="start-date", class="form-control") }}
+                                    <span>Start Date</span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group">
+                                    {{ form.finish_date(id="finish-date", class="form-control") }}
+                                    <span>Finish Date</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row px-1 my-4">
+                            <div class="col-12">
+                                <div class="input-group">
+                                    {{ form.location(id="location", class="form-control") }}
+
+                                    <span>Location</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row px-1 my-3">
+                            <div class="col-12">
+                                <div class="input-group">
+                                    {{ form.description(id="description", rows="4", class="form-control") }}
+                                    <span>Description</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right my-3 px-1">
+                            <input type="submit" value="ADD" class="btn btn-primary">
+                        </div>
+                    </form>
+                </li>
+                {% for experience in experiences %}
+                <li class="list-group-item container-fluid">
+                    <div class="row">
+                        <div class="col-11">
+                            <h3>{{ experience.title }}</h3>
+                            <p class="period">{{ experience.start_date }} - {{ experience.finish_date }}</p>
+                            <p class="overflow-hidden">{{ experience.description }}</p>
+                        </div>
+                        <div class="dropdown col-1">
+                            <a class="text-secondary float-right list-actions" id='{{ experience.title.replace(' ', '-').lower() }}' role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="fa fa-ellipsis-v"></span>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby='{{ experience.title.replace(' ', '-').lower() }}'>
+                                <a class="dropdown-item" href="{{ url_for('admin.edit_experience', id=experience.id) }}">Edit</a>
+                                <a class="dropdown-item" href="{{ url_for('admin.delete_experience', id=experience.id) }}}">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
 {% endblock %}

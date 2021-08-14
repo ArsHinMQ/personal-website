@@ -3,50 +3,57 @@
 {% block title %}{{ kind.title() + 's' }}{% endblock %}
 
 {% block content %}
-<div class="conatienr-fluid my-4">
-    <div class="col-md-7 m-auto">
-        <div class="input-group">
-            <input type="search" name="ability" id="searchField" class="form-control ability-input" placeholder="Search for.." onkeyup="filter(this)">
-            <div class="input-group-append">
-                <span class="bg-orange input-group-text text-light">
-                    <li class="fa fa-search"></li>
-                </span>
+<ul class="list-group list-group-flush">
+    <button id='form-toggler' class="btn btn-primary collapsed" data-toggle='collapse' data-target='.collapseable-form'>
+        <li class="fa fa-plus"></li>
+    </button>
+    <hr>
+    <li class="list-group-item collapseable-form collapse">
+        <form action="{{ url_for('admin.new_ability', kind=kind) }}" id='new-ability' class="container-fluid" method="POST">
+            <div class="row px-1 my-4">
+                <div class="col-8">
+                    <div class="input-group">
+                        {{ form.name(id="name", class="form-control") }}
+                        <span>New {{ kind.title() }}</span>
+                    </div>
+                </div>
+                <div class="col-4 mx-0">
+                    <div class="input-group">
+                        {{ form.scale(id="numerical-scale", class="form-control", placeholder=' ') }}
+                        <span>Scale</span>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
-<section id="new-ability" class="container-fluid">
-    <form id="ability-form" action="{{ url_for('admin.new_ability', kind=kind) }}" method="POST">
-        {{ form.hidden_tag() }}
-        <div class="form-row my-2">
-            <div class="col-xl-8 form-group">
-                <label for="abilitiyName">Name:</label>
-                {{ form.name(id="abilityName", class="form-control ability-input", placeholder="Name...") }}
+            <div class="row px-1">
+                <div class="col-12">
+                    {{ form.progress(class="custom-range", id="progress-scale") }}
+                </div>
             </div>
-            <div class="col-xl-4 form-group">
-                <label for="abilityScale">Scale:</label>
-                {{ form.scale(id="abilityScale", class="form-control ability-input", placeholder="Scale", onkeyup="updateProgressScale(this.value)") }}
+            <div class="text-right my-3 px-1">
+                <input type="submit" value="ADD" class="btn btn-primary">
             </div>
-        </div>
-        <div class="form-row my-2">
-            <div class="col-xl-12 form-group">
-                <label for="abilityProgress">Progress:</label>
-                {{ form.progress(id="abilityProgress", class="custom-range", oncchange="updateNumbericalScale(this.value)") }}
-            </div>
-        </div>
-        <input type="submit" class="btn bg-orange text-white float-right" value="Add">
-    </form>
-</section>
-<div id="ability" class="content">
+        </form>
+    </li>
     {% for ability in abilities %}
-    <section id="{{ ability.name.replace(" ", "") }}" class="container-fluid">
-        <label for="{{ ability.name.replace(" ", "") + '-item'  }}">{{ ability.name }} - {{ ability.scale }}%</label>
-        <div id="{{ ability.name.replace(" ", "") + '-item' }}" class="custom-progress-bar">
-            <div class="progress-done" data-done="{{ ability.scale }}">
+    <li class="list-group-item">
+        <div class="container-fluid">
+            <div class="row ">
+                <div class="col-md-11 col-10">
+                    <div class="progress-wrapper">
+                        <label for="{{ ability.name.replace(' ', '-').lower() }}">{{ ability.name }}</label>
+                        <div id="{{ ability.name.replace(' ', '-').lower() }}" class="custom-progress-bar mb-2">
+                            <div class="progress-done" data-done="{{ ability.scale }}">
+                                <span>{{ ability.scale }}%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1 col-2">
+                    <a href="{{ url_for('admin.delete_ability', id=ability.id) }}" class="list-actions text-danger float-right" data-traget='tooltip' title='Remove'><span class="fa fa-remove"></span></a>
+                </div>
             </div>
         </div>
-        <a href="{{ url_for('admin.delete_ability', id=ability.id) }}" class="btn btn-danger float-right">Delete</a>
-    </section>
+    </li>
     {% endfor %}
-</div>
+</ul>
 {% endblock %}
