@@ -32,4 +32,4 @@ Hope you enjoy =)
 - Project: https://github.com/fatemmaqu/personal-website/
 
 ### Try it:
-- (Personal Website](http://localhost:5000/))
+- ([Personal Website](http://localhost:5000/))
