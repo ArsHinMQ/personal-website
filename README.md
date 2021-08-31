@@ -30,6 +30,3 @@ Hope you enjoy =)
 ## Contact 
 - Email: FatemMaqu@gmail.com
 - Project: https://github.com/fatemmaqu/personal-website/
-
-## Try it:
-- [Personal Website](http://personal-website-fatemmaqu.fandogh.cloud/)
