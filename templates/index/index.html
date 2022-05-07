@@ -12,62 +12,64 @@
     <title>{{ profile.fullname }}</title>
 </head>
 
-<body class="bg-img d-flex align-items-center justify-content-center flex-column" style="background: linear-gradient(to bottom ,rgba(38, 38, 38, 0.9), rgb(0, 204, 153, .9)),url({{ url_for('static', filename='images/bg/' + profile.bg) }});">
+<body class="bg-img d-flex align-items-center justify-content-center flex-column"
+    style="background: linear-gradient(to bottom ,rgba(38, 38, 38, 0.9), rgb(0, 204, 153, .9)),url({{ url_for('static', filename='images/bg/' + profile.bg) }});">
     <header class="container-fluid d-flex align-items-center flex-column justify-content-center">
-        <h3>WELCOME!</h3>
-        <h1>I'M {{ profile.fullname.upper() }}</h1>
+        <h3>سلام!</h3>
+        <h1>من {{ profile.fullname.upper() }} هستم</h1>
         <a href='#main'>
             <li class="fa fa-angle-down"></li>
         </a>
     </header>
     <main id='main' class="bg-light d-flex justify-content-center">
-        <img src="{{ url_for('static', filename='images/thumbnail/' + profile.thumbnail) }}" alt="" class="thumbnail-img rounded-circle">
+        <img src="{{ url_for('static', filename='images/thumbnail/' + profile.thumbnail) }}" alt=""
+            class="thumbnail-img rounded-circle">
         <div class="container">
             <div id='wrapper' class="row">
 
                 <!-- PROFILE -->
                 <section id='profile' class="col-12 container-fluid my-5">
-                    <h2>PROFILE</h2>
+                    <h2>پروفایل</h2>
                     <div class="row py-3">
+                        <div class="col-xl-7 px-xl-5">
+                            <h4>درباره من</h4>
+                            <div class="mt-3">
+                                <p>{{ profile.about }}</p>
+                            </div>
+                        </div>
                         <div class="col-xl-5 container-fluid px-3">
-                            <h4>DETAILS</h4>
+                            <h4>مشخصات</h4>
                             <div class="row px-2 mt-3">
                                 <div class="col-md-6">
                                     <strong>
-                                        <li class='fa fa-angle-right'></li>
-                                        NAME:
+                                        <li class='fa fa-angle-left'></li>
+                                        نام:
                                     </strong>
                                     <br>
                                     {{ profile.fullname }}
                                     <br>
                                     <strong>
-                                        <li class='fa fa-angle-right'></li>
-                                        AGE:
+                                        <li class='fa fa-angle-left'></li>
+                                        سن:
                                     </strong>
                                     <br>
                                     {{ profile.age }}
                                 </div>
                                 <div class="col-md-6">
                                     <strong>
-                                        <li class='fa fa-angle-right'></li>
-                                        BIRTH:
+                                        <li class='fa fa-angle-left'></li>
+                                        تاریخ تولد:
                                     </strong>
                                     <br>
                                     {{ profile.birth.strftime("%Y/%m/%d") }}
                                     <br>
                                     <strong>
-                                        <li class='fa fa-angle-right'></li>
-                                        LOCATION:
+                                        <li class='fa fa-angle-left'></li>
+                                        مکان:
                                     </strong>
                                     <br>
                                     {{ profile.location }}
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-7 mt-5 px-xl-5">
-                            <h4>ABOUT</h4>
-                            <div class="mt-3">
-                                <p>{{ profile.about }}</p>
                             </div>
                         </div>
                     </div>
@@ -75,7 +77,7 @@
 
                 <!-- SKILLS -->
                 <section id="skills" class="container-fluid my-5 col-12">
-                    <h2>SKILLS</h2>
+                    <h2>مهارت ها</h2>
                     <div class="row flex-xl-row-reverse">
                         {% for col in skills %}
                         <div class="col-xl-6 pr-xl-5 pr-md-4 mb-n4 px-3">
@@ -96,7 +98,7 @@
 
                 <!-- EDUCATIONS -->
                 <section id="educations" class="container-fluid my-5 col-12">
-                    <h2>EDUCATIONS</h2>
+                    <h2>سوابق تحصیلی</h2>
                     {% for edu in educations %}
                     <div class="row experience-wrapper">
                         <div class="col-xl-3">
@@ -119,7 +121,7 @@
 
                 <!-- LANGUAGES -->
                 <section id="languages" class="container-fluid col-12 my-5">
-                    <h2>LANGUAGES</h2>
+                    <h2>زبان</h2>
                     <div class="row flex-xl-row-reverse">
                         {% for col in langs %}
                         <div class="col-xl-6 pr-xl-5 pr-md-4 mb-n4 px-3">
@@ -140,7 +142,7 @@
 
                 <!-- CAREERS -->
                 <section id="educations" class="container-fluid my-5 col-12">
-                    <h2>CAREERS</h2>
+                    <h2>سوابق کاری</h2>
                     {% for career in careers %}
                     <div class="row experience-wrapper">
                         <div class="col-xl-3">
@@ -163,8 +165,17 @@
 
                 <!-- CONTACT -->
                 <section id='contact' class="container-fluid col-12 my-5">
-                    <h2>CONTACT</h2>
+                    <h2>تماس</h2>
                     <div class="row">
+                        <div id='contact-info' class="col-xl-4 border-xl-left mt-md-3">
+                            {% for contact in contacts %}
+                            <a href="https://{{ contact.address }}" target="_blank" data-target='tooltip'
+                                title='{{ contact.name }}'>
+                                <img src="{{ url_for('static', filename='images/logo/' + contact.logo) }}"
+                                    alt="{{ contact.name }}" class="logo"> <span> {{ contact.address }}</span>
+                            </a>
+                            {% endfor %}
+                        </div>
                         <div id='contact-form' class="col-xl-8">
                             <form action="{{ url_for('index') }}" class="container-fluid" method="POST">
                                 {{ form.hidden_tag() }}
@@ -172,13 +183,13 @@
                                     <div class="col-md-6">
                                         <div class="input-group my-3">
                                             {{ form.subject(id="subject", class="form-control") }}
-                                            <span>Subject</span>
+                                            <span>موضوع</span>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="input-group my-3">
                                             {{ form.sender_email(id="email", class="form-control", placeholder=' ') }}
-                                            <span>Email Address</span>
+                                            <span>آدرس ایمیل</span>
                                         </div>
                                     </div>
                                 </div>
@@ -186,19 +197,12 @@
                                     <div class="col-12">
                                         <div class="input-group">
                                             {{ form.msg(rows='10', id='messages', class='form-control') }}
-                                            <span>Message</span>
+                                            <span>پیام</span>
                                         </div>
                                     </div>
                                 </div>
-                                <input type="submit" value="SEND" class="btn btn-primary float-right px-5 py-2 mt-4">
+                                <input type="submit" value="ارسال" class="btn btn-primary float-left px-5 py-2 mt-4">
                             </form>
-                        </div>
-                        <div id='contact-info' class="col-xl-4 border-xl-left mt-md-3">
-                            {% for contact in contacts %}
-                            <a href="https://{{ contact.address }}" target="_blank" data-target='tooltip' title='{{ contact.name }}'>
-                                <img src="{{ url_for('static', filename='images/logo/' + contact.logo) }}" alt="{{ contact.name }}" class="logo"> <span> {{ contact.address }}</span>
-                            </a>
-                            {% endfor %}
                         </div>
                 </section>
             </div>
@@ -207,9 +211,15 @@
     {% include 'partials/flash.html' %}
 
     <footer>
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+            integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+            crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
+            integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+            crossorigin="anonymous"></script>
         <script src='{{ url_for("static", filename="js/base_script.js") }}'></script>
         <script src='{{ url_for("static", filename="index/js/script.js") }}'></script>
     </footer>

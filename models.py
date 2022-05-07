@@ -52,8 +52,7 @@ class Ability(db.Model):
         if value > 100:
             raise ValueError("Scale can't be over than 100")
         elif value <= 0:
-            raise ValueError(
-                "Invalid scale, did you enter 0 or a negative number as scale?")
+            raise ValueError("Invalid scale, did you enter 0 or a negative number as scale?")
         return value
 
 

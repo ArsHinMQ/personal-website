@@ -21,7 +21,7 @@ def login(profile):
             abort(400)
 
         if not profile.check_password(form.password.data):
-            flash("Incorrect Password", "danger")
+            flash("پسورد اشتباه است", "danger")
             return render_template("admin/login/login.html",
                                    form=form,
                                    profile=profile)
@@ -29,7 +29,6 @@ def login(profile):
         session['fullname'] = profile.fullname
         return redirect(url_for("admin.set_profile"))
     if session.get("fullname"):
-        flash("You already logged in", 'info')
         return redirect(url_for("admin.set_profile"))
     return render_template("admin/login/login.html", form=form,
                            profile=profile)
@@ -66,7 +65,7 @@ def set_profile(profile):
         profile.age = form.age.data
         profile.about = form.about.data
         db.session.commit()
-        flash("Profile modified", "success")
+        flash("پروفایل ویرایش شد", "success")
         return redirect(url_for('admin.set_profile'))
 
     return render_template("admin/index.html", form=form, profile=profile)
@@ -82,17 +81,15 @@ def change_password(profile):
         if not form.validate_on_submit:
             abort(400)
         if not profile.check_password(form.old_password.data):
-            flash("""Wrong password, please input your current password in the
-                    firstfield""", "danger")
+            flash("پسورد اشتباه است. لطفا پسورد فعلی خود را در اولین فیلد وارد کنید", "danger")
             return redirect(url_for('admin.change_password'))
         if form.new_password.data != form.config_password.data:
-            flash("""New password and configure password were not match, try
-                    again""", "warning")
+            flash("پسورد ها متفاوت بودند", "warning")
             return redirect(url_for('admin.change_password'))
         try:
             profile.password = form.new_password.data
             db.session.commit()
-            flash("password changed", "success")
+            flash("پسورد ویرایش شد", "success")
             return redirect(url_for('admin.change_password'))
         except ValueError as e:
             flash(str(e), "warning")
@@ -106,12 +103,12 @@ def change_password(profile):
 @admin_only
 def delete_thumbnail(profile):
     if profile.thumbnail == "thumbnail-img.jpg":
-        flash('You can\'t set thumbnail image null', "warning")
+        flash('تصویر پروفایل نمیتواند خالی باشد', "warning")
         return redirect(url_for('admin.set_profile'))
     os.remove(os.path.join("static/images/thumbnail/" + profile.thumbnail))
     profile.thumbnail = "thumbnail-img.jpg"
     db.session.commit()
-    flash("Thubmnail image deleted", "success")
+    flash("عکس پروفایل تغییر کرد", "success")
     return redirect(url_for('admin.set_profile'))
 
 
@@ -120,12 +117,12 @@ def delete_thumbnail(profile):
 @admin_only
 def delete_background(profile):
     if profile.bg == "background-img.jpg":
-        flash('You can\'t set background image null', "warning")
+        flash('تصویر زمینه نمی تواند خالی باشد', "warning")
         return redirect(url_for('admin.set_profile'))
     os.remove(os.path.join("static/images/bg/" + profile.bg))
     profile.bg = "background-img.jpg"   # Set Defualt
     db.session.commit()
-    flash("Background image deleted", "success")
+    flash("تصویر پس زمینه حذف شد", "success")
     return redirect(url_for('admin.set_profile'))
 
 
@@ -178,13 +175,13 @@ def new_ability(kind):
         )
         db.session.add(new_ability)
         db.session.commit()
-        flash(f"New {kind} added successfully!", 'success')
+        flash(f"با موفقیت افزوده شد!", 'success')
         return redirect(url_for(private_page))
     except ValueError as e:
         flash(str(e), 'warning')
     except IntegrityError:
         db.session.rollback()
-        flash(f"This {kind} is allready exist", 'danger')
+        flash(f"شما این مهارت/زبان را در رزومه خود دارید", 'danger')
     return redirect(url_for(private_page))
 
 
@@ -197,7 +194,7 @@ def delete_ability(id):
     private_page = "admin.skills" if ability.kind == 'skill' else 'admin.languages'
     db.session.delete(ability)
     db.session.commit()
-    flash(f"{ability.kind} deleted", "success")
+    flash(f"با موفقیت حذف شد", "success")
     return redirect(url_for(private_page))
 
 
@@ -252,7 +249,7 @@ def new_experience(kind):
                                 )
     db.session.add(new_experience)
     db.session.commit()
-    flash(f"New {kind} added successfully!", "success")
+    flash(f"با موفقیت افزوده شد", "success")
     return redirect(url_for(private_page))
 
 
@@ -276,7 +273,7 @@ def edit_experience(profile, id):
         experience.location = form.location.data
         experience.description = form.description.data
         db.session.commit()
-        flash("Experience edited!", "success")
+        flash("ویرایش شد", "success")
         return redirect(url_for(private_page))
 
     return render_template('admin/edit_experience.html',
@@ -297,7 +294,7 @@ def delete_experience(id):
 
     db.session.delete(experience)
     db.session.commit()
-    flash("Experience deleted!", "success")
+    flash("با موفقیت حذف شد", "success")
     return redirect(url_for(private_page))
 
 
@@ -324,11 +321,11 @@ def contact_info(profile):
             db.session.add(new_contact_address)
             db.session.commit()
 
-            flash("New contact address added!", "success")
+            flash("با موفقیت افزوده شد", "success")
             return redirect(url_for('admin.contact_info'))
         except IntegrityError:
             db.session.rollback()
-            flash("Duplicated contact", "danger")
+            flash("شما این رسانه را در رزومه خود دارید", "danger")
 
     return render_template('admin/contact_info.html',
                            contacts=contacts,
@@ -346,7 +343,7 @@ def delete_contact(id):
     os.remove(os.path.join("static/images/logo/" + contact.logo))
     db.session.delete(contact)
     db.session.commit()
-    flash('Contact address deleted successfully!', 'success')
+    flash('با موفقیت حذف شد', 'success')
     return redirect(url_for('admin.contact_info'))
 
 
@@ -384,7 +381,7 @@ def delete_mail(id):
 
     db.session.delete(message)
     db.session.commit()
-    flash("Message deleted!", "success")
+    flash("پیام حذف شد", "success")
     return redirect(url_for('admin.inbox'))
 
 

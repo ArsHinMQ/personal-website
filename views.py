@@ -27,7 +27,7 @@ def index():
         if not form.validate_on_submit:
             abort(400)
         if not form.sender_email.data or not form.msg.data:
-            flash("please fill all the required fields", "warning")
+            flash("لطفا تمامی فیلد ها را پر کنید", "warning")
             return redirect(url_for('index'))
 
         new_msg = Message(
@@ -37,7 +37,7 @@ def index():
         )
         db.session.add(new_msg)
         db.session.commit()
-        flash("Your Message sended", "success")
+        flash("پیام شما ارسال شد", "success")
         return redirect(url_for('index'))
 
     return render_template('index/index.html',

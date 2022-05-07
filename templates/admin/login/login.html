@@ -8,23 +8,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='admin/login/styles/custom.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/base_style.css') }}">
-    <title>Admin | Login</title>
+    <title>ادمین | ورود</title>
 </head>
 <body class="bg-img d-flex justify-content-center align-items-center" style="background: linear-gradient(to right ,rgba(38, 38, 38, 0.95), rgb(0, 204, 153, .95)),url({{ url_for('static', filename='images/bg/' + profile.bg) }});">
     <main class="bg-light">
         <header class="border-bottom py-1">
-            <h3>Welcome Back!</h3>
-            <p>Please Login</p>
+            <h3>خوش برگشتید!</h3>
+            <p>لطفا پسورد خود را وارد کنید</p>
         </header>
         <div class="content pt-4">
             <form action="{{ url_for('admin.login') }}", method="POST">
                 <div class="input-group">
                     {{ form.password(id="pwd", class="form-control") }}
-                    <span>Password</span>
+                    <span>پسورد</span>
                 </div>
-                <div class="mt-4 float-right">
-                    <a href="{{ url_for('index') }}" class="btn btn-link">Back</a>
-                    <input type="submit" value="LOGIN" class="btn btn-primary">
+                <div class="mt-4 float-left">
+                    <a href="{{ url_for('index') }}" class="btn btn-link">بازگشت</a>
+                    <input type="submit" value="ورود" class="btn btn-primary">
                 </div>
             </form>
         </div>

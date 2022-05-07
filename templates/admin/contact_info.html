@@ -1,6 +1,6 @@
 {% extends 'admin/base.html' %}
 
-{% block title %}Contact Info{% endblock %}
+{% block title %}اظلاعات تماس{% endblock %}
 
 {% block content %}
 <ul class="list-group list-group-flush">
@@ -14,14 +14,14 @@
             <div class="row px-1 my-4">
                 <div class="col-2">
                     {{ form.logo(class='d-none') }}
-                    <button class="custom-file-btn rounded-circle mt-2 file-btn" data-change=true type="button" data-target='tooltip' title='Logo'>
+                    <button class="custom-file-btn rounded-circle mt-2 file-btn" data-change=true type="button" data-target='tooltip' title='لوگو'>
                         <span class="fa fa-picture-o"></span>
                     </button>
                 </div>
                 <div class="col-10 pl-md-0 pl-4 mt-2">
                     <div class="input-group">
                         {{ form.name(id='name', class='form-control') }}
-                        <span>Media Name</span>
+                        <span>رسانه</span>
                     </div>
                 </div>
             </div>
@@ -29,12 +29,12 @@
                 <div class="col-12">
                     <div class="input-group">
                         {{ form.address(id='address', class='form-control') }}
-                        <span>Address</span>
+                        <span>آدرس</span>
                     </div>
                 </div>
             </div>
-            <div class="text-right my-3 px-1">
-                <input type="submit" value="ADD" class="btn btn-primary">
+            <div class="float-left my-3 px-1">
+                <input type="submit" value="افزودن" class="btn btn-primary">
             </div>
         </form>
     </li>
@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="col-1">
-                <a href="{{ url_for('admin.delete_contact', id=contact.id) }}" class="float-right text-danger list-actions"><span class="fa fa-remove" data-target='tooltip' title='remove'></span></a>
+                <a href="{{ url_for('admin.delete_contact', id=contact.id) }}" class="float-right text-danger list-actions"><span class="fa fa-remove" data-target='tooltip' title='حذف'></span></a>
             </div>
         </div>
     </li>

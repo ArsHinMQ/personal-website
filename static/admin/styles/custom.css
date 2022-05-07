@@ -1,7 +1,7 @@
 @media (min-width: 801px) {
     #main-header, .content {
-        transition: margin-left .5s ease;
-        margin-left: 250px;
+        transition: margin-right .5s ease;
+        margin-right: 250px;
     }
 
     #main-sidebar {
@@ -32,11 +32,11 @@
     #main-sidebar.collapsed:not(:hover) #navigation-items .nav-item .nav-link {
         width: 3.3rem;
         padding-left: 16px;
-        margin-left: 4px;
+        margin-right: 4px;
     }
 
     #main-sidebar.collapsed:not(:hover) header .icon {
-        margin-left: 1.5rem;
+        margin-right: 1.5rem;
     }
 
     #main-sidebar.collapsed:hover {
@@ -45,7 +45,7 @@
     }
 
     #main-header.collapsed, .content.collapsed {
-        margin-left: 4.5rem;
+        margin-right: 4.5rem;
     }
 
     #close-sidebar {
@@ -64,10 +64,6 @@
     .list-group-item:hover div .list-actions {
         display: block;
     }
-
-    .custom-alert {
-        width: calc(100vw - 255px) !important;
-    }
 }
 
 @media (max-width: 800px) {
@@ -85,7 +81,7 @@
     }
 
     #close-btn {
-        margin-left: 250px;
+        margin-right: 250px;
         width: 5px;
     }
 

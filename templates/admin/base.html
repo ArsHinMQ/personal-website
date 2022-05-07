@@ -9,55 +9,55 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='admin/styles/custom.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/base_style.css') }}">
-    <title>Admin | {% block title %}{% endblock %} </title>
+    <title>ادمین | {% block title %}{% endblock %} </title>
 </head>
 
 <body>
     <aside id='main-sidebar' class="bg-img d-flex flex-column" style="background: linear-gradient(to right ,rgba(38, 38, 38, 0.95), rgb(0, 204, 153, .95)), url({{ url_for('static', filename='images/bg/' + profile.bg) }});">
         <header class="text-center mt-3 mb-4">
-            <h3 class="icon">{{ profile.fullname[0] }}</h3><h3>{{ profile.fullname[1:] }}</h3>
+            <h3 class="icon">{{ profile.fullname[0] }}‍</h3><h3>{{ profile.fullname[1:] }}</h3>
         </header>
         <ul id='navigation-items' class="nav nav-pills flex-column">
             <li class="nav-item" id='profile'>
                 <a href="{{ url_for('admin.set_profile') }}" class="nav-link">
                     <span class="fa fa-user"></span>
-                    <span>Profile</span>
+                    <span>پروفایل</span>
                 </a>
             </li>
             <li class="nav-item" id='skills'>
                 <a href="{{ url_for('admin.skills') }}" class="nav-link">
                     <span class="fa fa-check"></span>
-                    <span>Skills</span>
+                    <span>مهارت ها</span>
                 </a>
             </li>
             <li class="nav-item" id='languages'>
                 <a href="{{ url_for('admin.languages') }}" class="nav-link">
                     <span class="fa fa-language"></span>
-                    <span>Languages</span>
+                    <span>زبان</span>
                 </a>
             </li>
             <li class="nav-item" id='educations'>
                 <a href="{{ url_for('admin.educations') }}" class="nav-link">
                     <span class="fa fa-book"></span>
-                    <span>Educations</span>
+                    <span>سوابق تحصیلی</span>
                 </a>
             </li>
             <li class="nav-item" id='careers'>
                 <a href="{{ url_for('admin.careers') }}" class="nav-link">
                     <span class="fa fa-coffee"></span>
-                    <span>Careers</span>
+                    <span>سوابق شغلی</span>
                 </a>
             </li>
             <li class="nav-item" id='inbox'>
                 <a href="{{ url_for('admin.inbox') }}" class="nav-link">
                     <span class="fa fa-envelope"></span>
-                    <span>Inbox</span>
+                    <span>پیام ها</span>
                 </a>
             </li>
             <li class="nav-item" id='contacts'>
                 <a href="{{ url_for('admin.contact_info') }}" class="nav-link">
                     <span class="fa fa-phone"></span>
-                    <span>Contact Info</span>
+                    <span>اطلاعات تماس</span>
                 </a>
             </li>
         </ul>
@@ -69,15 +69,15 @@
                 <button id='toggle-btn' href="#" class="nav-link btn btn-link" role="button">
                     <span class="fa fa-bars"></span>
                 </button>
-                <a href="#" class="navbar-brand">Admin Panel</a>
-                <ul class="navbar-nav ml-auto">
+                <a href="#" class="navbar-brand">پنل ادمین</a>
+                <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a href="{{ url_for('admin.inbox') }}" class="nav-link text-secondary" data-target='tooltip' title='Inbox'>
+                        <a href="{{ url_for('admin.inbox') }}" class="nav-link text-secondary" data-target='tooltip' title='پیام ها'>
                             <span class="fa fa-comments-o"></span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ url_for('admin.logout') }}" class="nav-link text-danger" data-target='tooltip' title='Logout'>
+                        <a href="{{ url_for('admin.logout') }}" class="nav-link text-danger" data-target='tooltip' title='خروج'>
                             <span class="fa fa-sign-out"></span>
                         </a>
                     </li>
@@ -85,13 +85,13 @@
                         <a class="nav-link text-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
                             <span class="fa fa-ellipsis-v"></span>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right mr-3" aria-labelledby="navbarDropdown">
-                            <a href="{{ url_for('index') }}" class="dropdown-item">View</a>
+                        <div class="dropdown-menu ml-3 text-right" aria-labelledby="navbarDropdown">
+                            <a href="{{ url_for('index') }}" class="dropdown-item">صفحه اصلی</a>
                             <div class="dropdown-divider"></div>
-                            <a href="{{ url_for('admin.inbox') }}" class="dropdown-item">Inbox</a>
-                            <a href="{{ url_for('admin.change_password') }}" class="dropdown-item">Password</a>
+                            <a href="{{ url_for('admin.inbox') }}" class="dropdown-item">ایمیل ها</a>
+                            <a href="{{ url_for('admin.change_password') }}" class="dropdown-item">پسورد</a>
                             <div class="dropdown-divider"></div>
-                            <a href="{{ url_for('admin.logout') }}" class="dropdown-item text-danger">Logout</a>
+                            <a href="{{ url_for('admin.logout') }}" class="dropdown-item text-danger">خروج</a>
                         </div>
                     </li>
                 </ul>

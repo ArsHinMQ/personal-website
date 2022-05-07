@@ -7,18 +7,22 @@
     <div class="card-header px-1 px-md-2">
         <h5 class="mb-1">{{ message.subject }}</h5>
         <div class="d-flex justify-content-between">
-            <span class="text-secondary">From: {{ message.sender_email }}</span>
-            <small class="text-muted">in {{message.postage_date.strftime("%Y/%m/%d") }} at {{message.postage_date.strftime("%H:%M") }}</small>
+            <span class="text-secondary">از: {{ message.sender_email }}</span>
+            <small class="text-muted">در {{message.postage_date.strftime("%Y/%m/%d") }} ساعت
+                {{message.postage_date.strftime("%H:%M") }}</small>
         </div>
     </div>
     <div class="card-body p-0">
         <div class="card-actions border-bottom d-flex justify-content-between px-2">
             <div>
-                <a href="{{ url_for('admin.inbox') }}" data-target='tooltip' title='Back'><span class="fa fa-arrow-left"></span></a>
+                <a href="{{ url_for('admin.delete_mail', id=message.id) }}" data-target='tooltip' title='حذف'><span
+                        class="fa fa-trash"></span></a>
+                <a href="mailto:{{ message.sender_email }}" data-target='tooltip' title='پاسخ'><span
+                        class="fa fa-reply"></span></a>
             </div>
             <div>
-                <a href="{{ url_for('admin.delete_mail', id=message.id) }}" data-target='tooltip' title='Remove'><span class="fa fa-trash"></span></a>
-                <a href="mailto:{{ message.sender_email }}" data-target='tooltip' title='Reply'><span class="fa fa-reply"></span></a>
+                <a href="{{ url_for('admin.inbox') }}" data-target='tooltip' title='بازگشت'><span
+                        class="fa fa-arrow-left"></span></a>
             </div>
         </div>
         <div class="msg-body px-3 py-5">

@@ -6,16 +6,21 @@
 }
 
 @font-face {
-    font-family: 'Open Sans';
-    src: url('../fonts/open-sans-v20-latin-regular.eot') format('eot');
-    src: url('../fonts/open-sans-v20-latin-regular.ttf') format('ttf');
-    src: url('../fonts/open-sans-v20-latin-regular.woff') format('woff');
+    font-family: 'Tanha';
+    src: url('../fonts/Tanha.eot') format('eot');
+    src: url('../fonts/Tanha.ttf') format('ttf');
+    src: url('../fonts/Tanha.woff') format('woff');
 }
 
+@media (min-height: 800) {
+    h1, h2 {
+        font-size: 1.5rem !important;
+    }
+}
 
 /* Custom Tags */
 body {
-    font-family: 'Open Sans';
+    font-family: 'Tanha';
     position: relative;
     overflow-x: hidden !important;
     min-height: 100vh;
@@ -25,6 +30,16 @@ body {
 body, html, * {
     padding: 0;
     margin: 0;
+}
+
+body, html {
+    text-align: right;
+    direction: rtl;
+}
+
+strong {
+    font-weight: 900;
+    color: #999
 }
 
 h1 {
@@ -125,7 +140,8 @@ html, body {
     width: 0;
     text-align: center;
     min-width: .2rem;
-    background-color: var(--secondary)
+    background-color: var(--secondary);
+    margin-right: auto;
 }
 
 .custom-progress-bar .progress-done span {
@@ -186,11 +202,8 @@ input.form-control {
     transition: .25s;
     pointer-events: none;
     z-index: 1020;
-}
-
-.form-control~span {
     bottom: 0.5rem;
-    left: .25rem;
+    right: .25rem;
 }
 
 .form-control:focus~span,
@@ -215,7 +228,7 @@ textarea.form-control:focus~span, textarea.form-control:valid~span {
 
 textarea {
     resize: vertical;
-    line-height: 1.5rem;
+    line-height: 1.5rem !important;
     padding-top: 1.5rem !important;
     scrollbar-width: none;
 }

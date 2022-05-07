@@ -1,47 +1,47 @@
 {% extends 'admin/base.html' %}
 
-{% block title %}Profile{% endblock %}
+{% block title %}پروفایل{% endblock %}
 
 {% block content %}
 <form action="{{ url_for('admin.set_profile') }}" method="POST" enctype="multipart/form-data" class="mx-2">
     {{ form.hidden_tag() }}
-    <div class="form-group dropdown d-flex justify-content-end mx-3 my-2">
-        <button class="custom-file-btn rounded-circle mt-2" data-toggle="dropdown" type="button" data-target='tooltip' title='Background picture'>
+    <div class="form-group dropdown d-flex justify-content-start mx-3 my-2">
+        <button class="custom-file-btn rounded-circle mt-2" data-toggle="dropdown" type="button" data-target='tooltip' title='عکس پس زمینه'>
             <li class="fa fa-picture-o"></li>
         </button>
-        <div class="dropdown-menu col-xl-4 col-md-5 col-sm-12">
+        <div class="dropdown-menu dropdown-menu-right col-xl-4 col-md-5 col-sm-12 text-right">
             {{ form.bg(class='d-none') }}
-            <button class="dropdown-item file-btn" type="button" data-change=true data-changethis='aside'>Change background picture</button>
-            <a class="dropdown-item" href="{{ url_for('admin.delete_background') }}">Set background picture to default</a>
+            <button class="dropdown-item file-btn" type="button" data-change=true data-changethis='aside'>تغییر عکس پس زمینه</button>
+            <a class="dropdown-item" href="{{ url_for('admin.delete_background') }}">استفاده از پس زمینه پیش فرض</a>
         </div>
     </div>
     <div class="d-flex justify-content-center text-center">
         <div class="my-3 d-block">
             {{ form.thumbnail(class='d-none') }}
-            <button id='thumbnail-btn' type="button" class="file-btn rounded-circle d-block mb-2" data-change=true data-toggle="tooltip" title="Change thumbnail picture"
+            <button id='thumbnail-btn' type="button" class="file-btn rounded-circle d-block mb-2" data-change=true data-toggle="tooltip" title="تغییر عکس پروفایل"
                 style="background-image: url({{ url_for('static', filename='images/thumbnail/' + profile.thumbnail) }});">
                 <li class="fa fa-camera fa-4x"></li>
             </button>
-            <a href="{{ url_for('admin.delete_thumbnail') }}">Set thumbnail picture to default</a>
+            <a href="{{ url_for('admin.delete_thumbnail') }}">استفاده از تصویر پروفایل پیش فرض</a>
         </div>
     </div>
     <div class="form-row px-md-5">
         <div class="col-xl-4 col-md-7 mt-3">
             <div class="input-group">
                 {{ form.fullname(id='fullname', class='form-control') }}
-                <span>Fullname</span>
+                <span>نام</span>
             </div>
         </div>
         <div class="col-xl-2 col-md-5 mt-3">
             <div class="input-group">
                 {{ form.age(id='age', class='form-control', placeholder=' ') }}
-                <span>Age</span>
+                <span>سن</span>
             </div>
         </div>
         <div class="col-xl-6 col-md-12 mt-3">
             <div class="input-group">
                 {{ form.birth(id="birth", class="form-control") }}
-                <span>Birth</span>
+                <span>تاریخ تولد</span>
             </div>
         </div>
     </div>
@@ -49,7 +49,7 @@
         <div class="col-12">
             <div class="input-group">
                 {{ form.location(id='location', class='form-control') }}
-                <span>Location</span>
+                <span>مکان</span>
             </div>
         </div>
     </div>
@@ -57,7 +57,7 @@
         <div class="col-12">
             <div class="input-group">
                 {{ form.about(id='about', class="form-control", rows="10") }}
-                <span>About You</span>
+                <span>درباره</span>
             </div>
         </div>
     </div>
